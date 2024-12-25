@@ -1,4 +1,5 @@
-﻿using System.Buffers.Text;
+﻿using System;
+using System.Buffers.Text;
 using System.ComponentModel;
 using System.Diagnostics.Metrics;
 using System.Reflection.Metadata;
@@ -41,6 +42,43 @@ namespace GitHub
 
 
             #region Q2:Explain the difference between passing (Reference type parameters) by value and by reference then write a suitable c#example.
+            /* 
+             * by value 
+             **** When a reference type is passed by value, address is passed to another varible 
+             ****So in stack we will have two varibles have the the same addres to data
+             ****So ,Changes made to the parameter inside the function directly affect the original data.
+             ****
+             
+             */
+            var arr2 = new int[] { 10, 20, 30 };
+            Modify(arr2);
+            static void Modify(int[] array)
+                {
+                    array[0] = 99;                          // will change the 1st item in arr
+                    
+                    array = new int[] { 10, 20, 30 };       // local var array will point to another data
+                                                            ////but cannot reassign the orginal reference 
+
+            }
+
+
+            /* 
+           * by reference 
+           **** When a reference type is passed by reference, alise is passed
+           ****So in stack we will have one varible has the addres to data
+           ****So ,Changes made to the parameter inside the function directly affect the original data.
+           ****
+
+           */
+            var arr22 = new int[] { 10, 20, 30 };
+            Modify2(ref arr22);
+            static void Modify2( ref int[] array)
+            {
+                array[0] = 99;                          // will change the 1st item in arr
+                array = new int[] { 10, 20, 30 };       // array(alise) and arr22 will point to another data
+                                                        ////can reassign the orginal reference 
+            }
+
 
 
             #endregion
