@@ -451,7 +451,7 @@
             var res3 = Arr3.GroupBy(s => new string(s.Trim().OrderBy(c => c).ToArray())) ;
             /*query syntax
              */
-            res3 = from s in res3
+            res3 = from s in Arr3
                    group s by new string(s.Trim().OrderBy(c => c).ToArray());
 
             foreach (var item in res3)
