@@ -1,9 +1,13 @@
 ﻿namespace GitHub
 {
     using Day_01_G01;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection.Metadata;
+    using System.Runtime.Intrinsics.X86;
     using static Day_01_G01.ListGenerator;
+    using static System.Net.Mime.MediaTypeNames;
+
     internal class Program
     {
         static void Main(string[] args)
@@ -375,6 +379,94 @@
             }
             #endregion
             #endregion
+
+            #region Grouping Operators
+            #region 1.	Use group by to partition a list of numbers by their remainder when divided by 5
+            Console.WriteLine("Grouping Operators");
+            Console.WriteLine("\n\n\n1.\tUse group by to partition a list of numbers by their remainder when divided by 5");
+
+            List<int> numbers5 = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+
+            /*Fluent Syntax
+             */
+
+            var res5 = numbers5.GroupBy(n => n % 5);
+
+            /*Query Syntax
+             */
+
+
+            res5 = from n in numbers5
+                   group n by n % 5;
+
+
+
+            foreach (var item in res5)
+            {
+                Console.WriteLine($" the  numbers with remainder of {item.Key} when divided by 5\n\n");
+                foreach (var item2 in item)
+                {
+                    Console.WriteLine(item2);
+                }
+            }
+
+
+
+            #endregion
+
+            #region 2.	Uses group by to partition a list of words by their first letter.Use dictionary_english.txt for Input
+
+            Console.WriteLine("\n\n\n2.\tUses group by to partition a list of words by their first letter.Use dictionary_english.txt for Input");
+            var words = File.ReadAllLines("dictionary_english.txt").SelectMany(line=>line.Split(" "));
+
+            /*fluent syntax
+             */
+            var res2 = words.GroupBy(w => w[0]);
+
+
+            /*Query syntax
+             */
+            res2 = from w in words
+                   group w by w[0];
+
+
+            //foreach (var item in res2)
+            //{
+            //    Console.WriteLine($"\nwords with letter {item.Key} : \n");
+            //    foreach (var item2 in item)
+            //    {
+            //        Console.WriteLine(item2);
+            //    }
+
+            //}
+
+
+
+            #endregion
+
+            #region 3. Use Group By with a custom comparer that matches words that are consists of the same Characters Together
+            String[] Arr3 = { "from", "salt", "earn", " last", "near", "form" };
+            /*fluent syntax
+             */
+            var res3 = Arr3.GroupBy(s => new string(s.Trim().OrderBy(c => c).ToArray())) ;
+            /*query syntax
+             */
+            res3 = from s in res3
+                   group s by new string(s.Trim().OrderBy(c => c).ToArray());
+
+            foreach (var item in res3)
+            {
+                Console.WriteLine(string.Join("\n",item));
+                Console.WriteLine("......");
+
+            }
+            #endregion 
+
+
+
+            #endregion
+
+
         }
     }
 }
