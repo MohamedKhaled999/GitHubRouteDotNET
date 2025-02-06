@@ -24,5 +24,7 @@ namespace DEMOEF.Migrations
                 table: "Employees",
                 newName: "Name");
         }
+
+
     }
 }

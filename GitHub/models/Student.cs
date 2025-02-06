@@ -5,21 +5,24 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Task.models;
 
-namespace DEMOEF.models
+namespace GitHub.models
 {
-    internal class Employee
+    public class Student
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Code { get; set; }
+        public int ID { get; set; }
         [Column(TypeName ="varchar")]
         //not related to DB
 
         //[StringLength(50,MinimumLength =10)]
         //[MinLength(50)]
         [Length(10,50)]
-        public string? EmpName { get; set; }
+        public string? FName { get; set; }
+        [Length(10, 50)]
+        public string? LName { get; set; }
 
         [Column(TypeName ="decimal(18,2)")]
 
@@ -31,17 +34,17 @@ namespace DEMOEF.models
         public int? Age { get; set; }
 
         [EmailAddress]
-        public string EmailAddress { get; set; }
+        public string Address { get; set; }
+        public int DepartmentId { get; set; }
 
 
-        [Phone]
-        public string PhoneNumber { get; set; }
+        //public virtual List<Course> Courses { get; set; } = new List<Course>();
 
-        [DataType(DataType.Password)]
-        public string Password { get; set; } = string.Empty;
+        public virtual Department Department { get; set; } =new Department();
 
 
 
+        
 
 
     }

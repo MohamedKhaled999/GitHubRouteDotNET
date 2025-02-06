@@ -4,6 +4,7 @@ using DEMOEF.models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DEMOEF.Migrations
 {
     [DbContext(typeof(CompanyDBContext))]
-    partial class CompanyDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250204194853_UsingAtrr")]
+    partial class UsingAtrr
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,29 +57,6 @@ namespace DEMOEF.Migrations
                     b.HasKey("Code");
 
                     b.ToTable("Employees");
-                });
-
-            modelBuilder.Entity("EFSession02FlluentApis.Department", b =>
-                {
-                    b.Property<int>("DeptId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeptId"), 10L, 10);
-
-                    b.Property<DateTime>("CreationDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETDate()");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar")
-                        .HasColumnName("DepartmentName");
-
-                    b.HasKey("DeptId");
-
-                    b.ToTable("Departments", "dbo");
                 });
 #pragma warning restore 612, 618
         }
