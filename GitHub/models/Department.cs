@@ -17,10 +17,10 @@ namespace GitHub.models
         public DateTime HiringDate { get; set; }
 
 
-        //[ForeignKey("Instructor")]
-        //public int InstructorId { get; set; }
+        //[ForeignKey("Manager")]
+        //public int ManagerId { get; set; }
 
-        //public virtual Instructor Instructor { get; set; } = new Instructor();
+        //public virtual Instructor Manager { get; set; } = new Instructor();
 
         public virtual List<Student> Students { get; set; } = new();
         public virtual List<Instructor> Instructors { get; set; } = new();

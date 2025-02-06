@@ -19,10 +19,17 @@ namespace Task.models
 
         public double HourRate { get; set; }
 
+
         [ForeignKey("Department")]
         public int DepartmentId { get; set; }
-
+        // many-to-one
         public virtual Department Department { get; set; } = new Department();
+
+        // One-to-One: 
+        //public virtual Department? ManagedDepartment { get; set; }
+
+
+
 
 
         //public virtual List<Course> Courses { get; set; } =new List<Course>();
