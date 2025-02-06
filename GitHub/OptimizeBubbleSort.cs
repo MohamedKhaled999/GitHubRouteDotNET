@@ -20,7 +20,10 @@ namespace GitHub
                 {
                     if (list[j].CompareTo(list[j + 1])>0)
                     {
-                        Swap(list[j], list[j + 1]);
+                        T temp = list[j];
+                        list[j] = list[j + 1];
+                        list[j + 1] = temp;
+
                         isSwaped = true;
                     }
                 }
@@ -30,12 +33,6 @@ namespace GitHub
 
         }
 
-        private static void Swap( T t1, T t2)
-        {
-           T temp = t1;
-           t1 = t2;
-            t2 = temp;
 
-        }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GitHub
 {
-    internal class Range<T>where T:IComparable<T>,INumber<T>
+    internal class Range<T>where T:IComparable<T>,ISubtractionOperators<T,T,T>
     {
         public T Minimum { get;  }
 

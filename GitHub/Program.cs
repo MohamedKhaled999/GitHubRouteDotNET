@@ -13,15 +13,35 @@
 
              */
 
-            List<int> list = new List<int>() { 1,8,10,7,8,0,29,-8,777};
+            List<int> list = new List<int>() { 1,8,10,7,8,0,29,777};
+
+            OptimizeBubbleSort<int>.Sort(ref list);
+
+            Console.WriteLine("Before sort...");
+
+            foreach (var item in list)
+            {
+                Console.WriteLine(item);
+            }
+
+            Console.WriteLine("After sort...");
+            foreach (int i in list) 
+            {
+                Console.WriteLine(i);
+            }
 
 
 
 
-
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
             #endregion
 
             #region 2.Range <T>
+
+            Console.WriteLine("\n\nRange");
             GitHub.Range<int> range = new(5,20);
 
             Console.WriteLine(range.IsInRange(10));
