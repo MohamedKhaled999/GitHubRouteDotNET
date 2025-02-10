@@ -5,6 +5,8 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitHub", "GitHub\GitHub.csproj", "{4C6D381A-E094-4DD8-8DDB-F18E2C660C55}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DEMOAdv3", "DEMOAdv3\DEMOAdv3.csproj", "{C9378827-65A3-4C48-970C-38DAAAC1CB7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{4C6D381A-E094-4DD8-8DDB-F18E2C660C55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C6D381A-E094-4DD8-8DDB-F18E2C660C55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C6D381A-E094-4DD8-8DDB-F18E2C660C55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9378827-65A3-4C48-970C-38DAAAC1CB7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9378827-65A3-4C48-970C-38DAAAC1CB7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9378827-65A3-4C48-970C-38DAAAC1CB7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9378827-65A3-4C48-970C-38DAAAC1CB7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
