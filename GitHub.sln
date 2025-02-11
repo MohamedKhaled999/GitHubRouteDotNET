@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task", "GitHub\Task.csproj"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DEMOEF", "DEMOEF\DEMOEF.csproj", "{3CCFFD99-8BFF-458E-A536-1151DA4C5D95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFSession02FlluentApis", "EFSession02FlluentApis\EFSession02FlluentApis.csproj", "{8DB21F8F-0C91-4117-982F-BD59CC72E5BB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{3CCFFD99-8BFF-458E-A536-1151DA4C5D95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CCFFD99-8BFF-458E-A536-1151DA4C5D95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CCFFD99-8BFF-458E-A536-1151DA4C5D95}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8DB21F8F-0C91-4117-982F-BD59CC72E5BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8DB21F8F-0C91-4117-982F-BD59CC72E5BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8DB21F8F-0C91-4117-982F-BD59CC72E5BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8DB21F8F-0C91-4117-982F-BD59CC72E5BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

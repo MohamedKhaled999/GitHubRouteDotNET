@@ -15,8 +15,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\EFSession02FlluentApis\EFSession02FlluentApis.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -12,11 +12,11 @@ namespace DEMOEF.models
     {
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
-            builder.
-                 Property<string>("Address").
-                 HasColumnType("varchar").
-                 HasMaxLength(50).
-                 IsRequired();
+            //builder.
+            //     Property<string>("Address").
+            //     HasColumnType("varchar").
+            //     HasMaxLength(50).
+            //     IsRequired();
 
         }
     }

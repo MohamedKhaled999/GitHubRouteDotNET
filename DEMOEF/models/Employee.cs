@@ -8,22 +8,25 @@ using System.Threading.Tasks;
 
 namespace DEMOEF.models
 {
-    internal class Employee
+    public class Employee
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Code { get; set; }
-        [Column(TypeName ="varchar")]
+        
         //not related to DB
 
         //[StringLength(50,MinimumLength =10)]
         //[MinLength(50)]
+        //[Length(10,50)]
+        [Column(TypeName="nvarchar(50)")]
         [Length(10,50)]
+
         public string? EmpName { get; set; }
 
         [Column(TypeName ="decimal(18,2)")]
 
-        public decimal Salary { get; set; }
+        public decimal Salary{ get; set; }
 
         [Range(22,60)]
         [AllowedValues(20,21,22,23)]
@@ -31,18 +34,30 @@ namespace DEMOEF.models
         public int? Age { get; set; }
 
         [EmailAddress]
-        public string EmailAddress { get; set; }
+        public string? EmailAddress { get; set; }
 
 
         [Phone]
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
 
         [DataType(DataType.Password)]
-        public string Password { get; set; } = string.Empty;
+        public string? Password { get; set; } = string.Empty;
 
 
+        // work one
+        //
+        [ForeignKey("Department")]
+        public int? DepartmentId { get; set; }
 
+        [InverseProperty(nameof(models.Department.Employees))]
 
+        public Department? Department { get; set; }
+
+        // manage one
+        //
+
+        [InverseProperty(nameof(models.Department.Manager))]
+        public Department? DepartmentManage { get; set; }
 
     }
 }
