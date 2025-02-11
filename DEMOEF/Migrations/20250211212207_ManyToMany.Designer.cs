@@ -4,6 +4,7 @@ using DEMOEF.models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DEMOEF.Migrations
 {
     [DbContext(typeof(CompanyDBContext))]
-    partial class CompanyDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250211212207_ManyToMany")]
+    partial class ManyToMany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,38 +106,6 @@ namespace DEMOEF.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("DEMOEF.models.Employee2", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Employee2");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Employee2");
-
-                    b.UseTphMappingStrategy();
-                });
-
             modelBuilder.Entity("DEMOEF.models.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -170,32 +141,6 @@ namespace DEMOEF.Migrations
                     b.HasIndex("CourseId");
 
                     b.ToTable("StudentCourses");
-                });
-
-            modelBuilder.Entity("DEMOEF.models.FullTimeEmployee", b =>
-                {
-                    b.HasBaseType("DEMOEF.models.Employee2");
-
-                    b.Property<decimal>("Salary")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasDiscriminator().HasValue("FullTimeEmployee");
-                });
-
-            modelBuilder.Entity("DEMOEF.models.PartTimeEmployee", b =>
-                {
-                    b.HasBaseType("DEMOEF.models.Employee2");
-
-                    b.Property<int>("CountOfHours")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("HourRate")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasDiscriminator().HasValue("PartTimeEmployee");
                 });
 
             modelBuilder.Entity("DEMOEF.models.Department", b =>

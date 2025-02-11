@@ -24,7 +24,7 @@ namespace DEMOEF.models
             //modelBuilder.ApplyConfiguration<Department>(new DepartmentConfigrations());
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            
+
 
 
             #region Employee
@@ -56,13 +56,28 @@ namespace DEMOEF.models
 
 
 
-
             #endregion
+            modelBuilder.Entity<StudentCourse>().HasKey(sc => new {sc.StudentId,sc.CourseId });
+
+
+
+            #region TPH
+
+            modelBuilder.Entity<FullTimeEmployee>().HasBaseType<Employee2>();
+            modelBuilder.Entity<PartTimeEmployee>().HasBaseType<Employee2>();
+            #endregion
+
 
         }
         
         
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<StudentCourse>  StudentCourses { get; set; }
+        public DbSet<FullTimeEmployee>  FullTimeEmployees { get; set; }
+        public DbSet<PartTimeEmployee>  partTimeEmployees { get; set; }
+
     }
 }

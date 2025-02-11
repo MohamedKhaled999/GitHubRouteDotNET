@@ -81,19 +81,8 @@ namespace DEMOEF
 
 
             #endregion
-            #region One-To-Many
-
-            #endregion
-            #region One-To-One
-
-            #endregion
-            #region TPCC
-
-            #endregion
-
-            #region TPCC
-
-            #endregion
+           
+            
 
 
         }
