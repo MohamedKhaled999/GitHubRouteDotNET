@@ -375,6 +375,87 @@
             }
             #endregion
             #endregion
+
+            #region Grouping Operators
+
+
+            Console.WriteLine();
+
+            Console.WriteLine("\n\n\nGrouping Operators\n\n\n");
+
+            #region Use group by to partition a list of numbers by their remainder when divided by 5
+
+            Console.WriteLine("\n\n\n\nUse group by to partition a list of numbers by their remainder when divided by 5");
+            var mylist = Enumerable.Range(0, 15);
+
+            var remaindersOf5 = mylist.GroupBy(i => i % 5);
+            remaindersOf5 = from i in mylist
+                            group i by i % 5;
+
+
+            foreach (var item in remaindersOf5)
+            {
+
+                Console.WriteLine($"Numbers with a remainder of {item.Key} when divided by 5:\n");
+                foreach (var num in item)
+                    Console.WriteLine(num);
+
+            }
+
+
+            #endregion
+
+            #region Uses group by to partition a list of words by their first letter.Use dictionary_english.txt for Input
+
+
+
+            Console.WriteLine("\n\n\n\nUses group by to partition a list of words by their first letter.Use dictionary_english.txt for Input");
+            var words3 = File.ReadAllLines("dictionary_english.txt").SelectMany(line => line.Split(" "));
+            var wordsByTheirFirstLetter = words3.GroupBy(w => w[0]);
+
+            wordsByTheirFirstLetter = from w in words3
+                                      group w by w[0];
+
+
+            foreach (var item in wordsByTheirFirstLetter)
+            {
+
+                Console.WriteLine($"For letter {item.Key} , Words are\n");
+                foreach (var w in item)
+                    Console.WriteLine(w);
+
+            }
+
+
+            #endregion
+
+            #region Use Group By with a custom comparer that matches words that are consists of the same Characters Together
+
+
+
+            Console.WriteLine("\n\n\n\nUse Group By with a custom comparer that matches words that are consists of the same Characters Together");
+            string[] Arr33 = { "from   ", " salt", " earn ", "  last   ", " near ", " form  " };
+
+
+            var groupStr = Arr33.GroupBy(a => a, new CustomComparer());
+
+
+
+            foreach (var item in groupStr)
+            {
+                Console.WriteLine("...");
+                foreach (var w in item)
+                    Console.WriteLine(w.Trim());
+                Console.WriteLine("...");
+
+            }
+
+
+            #endregion
+
+            #endregion
+
+
         }
     }
 }
