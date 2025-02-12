@@ -8,7 +8,12 @@ namespace DEMOEF
         {
             Console.WriteLine("Hello, World!");
 
+            /*All session ideas has implelmented in this DEMO
+             * 
+             */
+
             CompanyDBContext db = new CompanyDBContext();
+
 
             #region CRUD
             #region Create/Insert
