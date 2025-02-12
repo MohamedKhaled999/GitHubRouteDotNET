@@ -78,6 +78,9 @@ namespace DEMOEF.models
         public DbSet<StudentCourse>  StudentCourses { get; set; }
         public DbSet<FullTimeEmployee>  FullTimeEmployees { get; set; }
         public DbSet<PartTimeEmployee>  partTimeEmployees { get; set; }
+        public DbSet<Employee2>  Employee2s { get; set; }
+
+        
 
     }
 }

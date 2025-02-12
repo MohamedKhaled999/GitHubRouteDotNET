@@ -14,7 +14,6 @@ namespace GitHub.models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
-        [Column(TypeName ="varchar")]
         //not related to DB
 
         //[StringLength(50,MinimumLength =10)]
@@ -26,7 +25,7 @@ namespace GitHub.models
 
         [Column(TypeName ="decimal(18,2)")]
 
-        public decimal Salary { get; set; }
+        public decimal? Salary { get; set; }
 
         [Range(22,60)]
         [AllowedValues(20,21,22,23)]
@@ -34,17 +33,28 @@ namespace GitHub.models
         public int? Age { get; set; }
 
         [EmailAddress]
-        public string Address { get; set; }
-        public int DepartmentId { get; set; }
+        public string? Address { get; set; }
 
 
-        //public virtual List<Course> Courses { get; set; } = new List<Course>();
+        #region  Stud-Dept
 
-        public virtual Department Department { get; set; } =new Department();
+        [ForeignKey("Department")]
+        public int? DepartmentId { get; set; }
+
+        public virtual Department? Department { get; set; }
+
+        #endregion
+
+        #region Stud-Course
+
+        public virtual ICollection<Stud_Course> Stud_Courses { get; set; } = new HashSet<Stud_Course>();
+
+        #endregion
 
 
 
-        
+
+
 
 
     }

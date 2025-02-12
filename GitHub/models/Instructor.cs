@@ -1,5 +1,4 @@
-﻿using GitHub.models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -19,14 +18,33 @@ namespace Task.models
 
         public double HourRate { get; set; }
 
+        #region Course_Inst
+        public virtual ICollection<Course_Inst> Course_Insts { get; set; } = new HashSet<Course_Inst>();
 
-        [ForeignKey("Department")]
-        public int DepartmentId { get; set; }
-        // many-to-one
-        public virtual Department Department { get; set; } = new Department();
+        #endregion
+
+
 
         // One-to-One: 
-        //public virtual Department? ManagedDepartment { get; set; }
+
+
+        #region [Inst-Dept] Manager
+        [InverseProperty(nameof(models.Department.Manager))]        
+        public virtual Department? ManagedDepartment { get; set; }
+
+        #endregion
+
+
+        #region [Inst-Dept] Work
+
+        [ForeignKey("Department")]
+        public int? DepartmentId { get; set; }
+        // many-to-one
+        [InverseProperty(nameof(models.Department.Instructors))]
+        public virtual Department? Department { get; set; }
+
+        #endregion
+
 
 
 

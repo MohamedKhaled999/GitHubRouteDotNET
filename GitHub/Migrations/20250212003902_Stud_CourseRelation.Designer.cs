@@ -4,6 +4,7 @@ using GitHub.models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Task.Migrations
 {
     [DbContext(typeof(CompanyDBContext))]
-    partial class CompanyDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250212003902_Stud_CourseRelation")]
+    partial class Stud_CourseRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,26 @@ namespace Task.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("GitHub.models.Department", b =>
+                {
+                    b.Property<int>("DeptId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeptId"));
+
+                    b.Property<DateTime>("HiringDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DeptId");
+
+                    b.ToTable("Departments");
+                });
 
             modelBuilder.Entity("GitHub.models.Student", b =>
                 {
@@ -75,53 +98,7 @@ namespace Task.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TopicId");
-
                     b.ToTable("Courses");
-                });
-
-            modelBuilder.Entity("Task.models.Course_Inst", b =>
-                {
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("InstructorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("evaluate")
-                        .HasColumnType("int");
-
-                    b.HasKey("CourseId", "InstructorId");
-
-                    b.HasIndex("InstructorId");
-
-                    b.ToTable("Course_Insts");
-                });
-
-            modelBuilder.Entity("Task.models.Department", b =>
-                {
-                    b.Property<int>("DeptId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeptId"));
-
-                    b.Property<DateTime?>("HiringDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ManagerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("DeptId");
-
-                    b.HasIndex("ManagerId")
-                        .IsUnique();
-
-                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("Task.models.Instructor", b =>
@@ -139,9 +116,6 @@ namespace Task.Migrations
                     b.Property<double>("Bouns")
                         .HasColumnType("float");
 
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("int");
-
                     b.Property<double>("HourRate")
                         .HasColumnType("float");
 
@@ -150,8 +124,6 @@ namespace Task.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Instructors");
                 });
@@ -193,58 +165,8 @@ namespace Task.Migrations
 
             modelBuilder.Entity("GitHub.models.Student", b =>
                 {
-                    b.HasOne("Task.models.Department", "Department")
+                    b.HasOne("GitHub.models.Department", "Department")
                         .WithMany("Students")
-                        .HasForeignKey("DepartmentId");
-
-                    b.Navigation("Department");
-                });
-
-            modelBuilder.Entity("Task.models.Course", b =>
-                {
-                    b.HasOne("Task.models.Topic", "Topic")
-                        .WithMany("Courses")
-                        .HasForeignKey("TopicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Topic");
-                });
-
-            modelBuilder.Entity("Task.models.Course_Inst", b =>
-                {
-                    b.HasOne("Task.models.Course", "Course")
-                        .WithMany("Course_Insts")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Task.models.Instructor", "Instructor")
-                        .WithMany("Course_Insts")
-                        .HasForeignKey("InstructorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Instructor");
-                });
-
-            modelBuilder.Entity("Task.models.Department", b =>
-                {
-                    b.HasOne("Task.models.Instructor", "Manager")
-                        .WithOne("ManagedDepartment")
-                        .HasForeignKey("Task.models.Department", "ManagerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Manager");
-                });
-
-            modelBuilder.Entity("Task.models.Instructor", b =>
-                {
-                    b.HasOne("Task.models.Department", "Department")
-                        .WithMany("Instructors")
                         .HasForeignKey("DepartmentId");
 
                     b.Navigation("Department");
@@ -269,6 +191,11 @@ namespace Task.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("GitHub.models.Department", b =>
+                {
+                    b.Navigation("Students");
+                });
+
             modelBuilder.Entity("GitHub.models.Student", b =>
                 {
                     b.Navigation("Stud_Courses");
@@ -276,28 +203,7 @@ namespace Task.Migrations
 
             modelBuilder.Entity("Task.models.Course", b =>
                 {
-                    b.Navigation("Course_Insts");
-
                     b.Navigation("Stud_Courses");
-                });
-
-            modelBuilder.Entity("Task.models.Department", b =>
-                {
-                    b.Navigation("Instructors");
-
-                    b.Navigation("Students");
-                });
-
-            modelBuilder.Entity("Task.models.Instructor", b =>
-                {
-                    b.Navigation("Course_Insts");
-
-                    b.Navigation("ManagedDepartment");
-                });
-
-            modelBuilder.Entity("Task.models.Topic", b =>
-                {
-                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }

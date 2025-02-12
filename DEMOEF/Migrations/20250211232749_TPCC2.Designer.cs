@@ -4,6 +4,7 @@ using DEMOEF.models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DEMOEF.Migrations
 {
     [DbContext(typeof(CompanyDBContext))]
-    partial class CompanyDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250211232749_TPCC2")]
+    partial class TPCC2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +38,7 @@ namespace DEMOEF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Courses", (string)null);
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("DEMOEF.models.Department", b =>
@@ -100,7 +103,7 @@ namespace DEMOEF.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Employees", (string)null);
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("DEMOEF.models.Employee2", b =>
@@ -128,7 +131,7 @@ namespace DEMOEF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employee2s", (string)null);
+                    b.ToTable("Employee2s");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Employee2");
 
@@ -151,7 +154,7 @@ namespace DEMOEF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Students", (string)null);
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("DEMOEF.models.StudentCourse", b =>
@@ -169,7 +172,7 @@ namespace DEMOEF.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("StudentCourses", (string)null);
+                    b.ToTable("StudentCourses");
                 });
 
             modelBuilder.Entity("DEMOEF.models.FullTimeEmployee", b =>
