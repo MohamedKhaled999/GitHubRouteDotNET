@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContinueLinqTasks", "GitHub\ContinueLinqTasks.csproj", "{4C6D381A-E094-4DD8-8DDB-F18E2C660C55}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContinueLinqDemo", "LinqDemo2\ContinueLinqDemo.csproj", "{5D938A45-A3E9-4308-B868-25A32A965DB1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DEMOEF", "DEMOEF\DEMOEF.csproj", "{3CCFFD99-8BFF-458E-A536-1151DA4C5D95}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DEMOEF04", "DEMOEF\DEMOEF04.csproj", "{3CCFFD99-8BFF-458E-A536-1151DA4C5D95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,14 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4C6D381A-E094-4DD8-8DDB-F18E2C660C55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C6D381A-E094-4DD8-8DDB-F18E2C660C55}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C6D381A-E094-4DD8-8DDB-F18E2C660C55}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C6D381A-E094-4DD8-8DDB-F18E2C660C55}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5D938A45-A3E9-4308-B868-25A32A965DB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D938A45-A3E9-4308-B868-25A32A965DB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D938A45-A3E9-4308-B868-25A32A965DB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D938A45-A3E9-4308-B868-25A32A965DB1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3CCFFD99-8BFF-458E-A536-1151DA4C5D95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3CCFFD99-8BFF-458E-A536-1151DA4C5D95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CCFFD99-8BFF-458E-A536-1151DA4C5D95}.Release|Any CPU.ActiveCfg = Release|Any CPU
