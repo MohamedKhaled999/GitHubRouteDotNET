@@ -1,4 +1,6 @@
-﻿using System;
+﻿using IKEA.DAL.Models.Departments;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +14,6 @@ namespace IKEA.DAL.Persistence.Data.DataSeed
         {
 
         }
+        public virtual DbSet<Department> Departments { get; set; }
     }
 }

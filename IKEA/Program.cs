@@ -20,7 +20,7 @@ namespace IKEA
             builder.Services.AddDbContext<ApplicationDbContext>(
                 OptionsBuilder =>
                 OptionsBuilder.
-                UseSqlServer("DefaultConnection")
+                UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 
                 );
             #endregion
