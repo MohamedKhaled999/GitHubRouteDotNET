@@ -104,7 +104,9 @@ namespace IKEA.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit([FromRoute]int x,
+        //[HttpPost("Department/Edit/{id?}")]
+
+        public IActionResult Edit([FromRoute]int id,
             [FromForm] DepartmentEditViewModel department)
         {
             if (!ModelState.IsValid)
@@ -114,7 +116,7 @@ namespace IKEA.Controllers
             {
                 var departmentToUpdate = new UpdatedDepartmentDTO()
                 {
-                    Id = x,
+                    Id = id,
                     Code = department.Code,
                     CreationDate = department.CreationDate,
                     Description = department.Description,
@@ -143,9 +145,53 @@ namespace IKEA.Controllers
 
 
         }
-
-
         #endregion
+
+        #region Delete
+
+        [HttpGet]
+        public IActionResult Delete(int? id  ) 
+        {
+            if (id is null)
+            {
+                return BadRequest();
+            }
+            var department = _departmentService.GetDepartmentById(id.Value);
+            //var isDeleted = _departmentService.DeleteDepartment(id.Value);
+
+            if (department is null)
+            {
+                return NotFound();
+            }
+
+            return View(department);
+
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var message = "Sorry , An Error Occurred During Deleting The Department";
+            try
+            {
+                var isDeleted = _departmentService.DeleteDepartment(id);
+                if (isDeleted)
+                {
+                    return RedirectToAction(nameof(Index)); 
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, ex.Message);
+                message = _webHostEnvironment.IsDevelopment() ? ex.Message : message;
+            }
+            return RedirectToAction(nameof(Index));
+
+        }
+        #endregion
+
 
     }
 }
