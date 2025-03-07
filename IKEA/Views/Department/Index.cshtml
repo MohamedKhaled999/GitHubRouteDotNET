@@ -51,20 +51,44 @@
                     Update
                 </a>
             </td>
+
             <td>
-                <a class="btn btn-outline-danger" 
-                    asp-controller="Department"
-                    asp-action="Delete"
-                    asp-route-Id="@department.Id">
-                    <i class="fa-solid fa-eraser"></i>
-                    Delete
-                </a>
+
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" 
+                        data-bs-target="#deleteModal" onclick="showModal(@department.Id,'@department.Name')">
+                            <i class="fa-solid fa-eraser"></i>
+                        </button>
             </td>
 
                </tr>
             }
         </tbody>
     </table>
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">DeleteDepartment</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are You Sure To Delete This Department :
+                    <span id="nameOfDepartment"></span>
+                </div>
+                <div class="modal-footer">
+                    <form id="deletedForm" method="post">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Delete</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 }
 else{
@@ -74,4 +98,17 @@ else{
        </h3>
     </div>
 }
+
+
+<script defer>
+
+   var modal = document.getElementById("deleteModal");
+     function showModal(id,name)
+    {
+        console.log(id,name);
+         document.getElementById("nameOfDepartment").innerText = name;
+          let form = document.getElementById("deletedForm");
+         form.setAttribute("action", `/Department/Delete/${id}`);
+    }
+</script>
 
