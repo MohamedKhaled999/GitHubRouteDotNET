@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace IKEA.DAL.Persistence.Repositories.Departments
 {
-    public class DepartmentRepository : IDepartmentRepository
+    public class EmployeeRepository : IDepartmentRepository
     {
         private readonly ApplicationDbContext _dbContext;
-        public DepartmentRepository(ApplicationDbContext dbContext)
+        public EmployeeRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }

@@ -25,7 +25,7 @@ namespace IKEA
                 UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 
                 );
-            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            builder.Services.AddScoped<IDepartmentRepository, EmployeeRepository>();
             builder.Services.AddScoped<IDepartmentService, DepartmentService>();
             #endregion
 
