@@ -1,4 +1,5 @@
-﻿using IKEA.DAL.Models.Employees;
+﻿using IKEA.DAL.Models.Departments;
+using IKEA.DAL.Models.Employees;
 using IKEA.DAL.Persistence.Repositories._Generic;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace IKEA.DAL.Persistence.Repositories.Employees
 {
     public interface IEmployeeRepository:IGenericRepository<Employee>
     {
-       
+
     }
 }

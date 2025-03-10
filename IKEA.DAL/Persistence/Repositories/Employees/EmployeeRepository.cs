@@ -1,5 +1,4 @@
-﻿using IKEA.DAL.Models.Departments;
-using IKEA.DAL.Models.Employees;
+﻿using IKEA.DAL.Models.Employees;
 using IKEA.DAL.Persistence.Data;
 using IKEA.DAL.Persistence.Repositories._Generic;
 using Microsoft.EntityFrameworkCore;
@@ -56,7 +55,9 @@ namespace IKEA.DAL.Persistence.Repositories.Employees
 
         public override string? ToString()
         {
+        
             return base.ToString();
+        
         }
 
         public int Update(Employee entity)

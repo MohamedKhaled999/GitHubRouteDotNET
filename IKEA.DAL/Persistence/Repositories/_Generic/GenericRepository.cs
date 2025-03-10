@@ -13,7 +13,7 @@ namespace IKEA.DAL.Persistence.Repositories._Generic
     public class GenericRepository<T> :IGenericRepository<T>
         where T : ModelBase
     {
-        protected readonly ApplicationDbContext _dbContext;
+       private protected readonly ApplicationDbContext _dbContext;
         public GenericRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;

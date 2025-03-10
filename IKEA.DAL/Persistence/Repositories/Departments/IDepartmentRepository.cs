@@ -10,12 +10,7 @@ namespace IKEA.DAL.Persistence.Repositories.Departments
 {
     public interface IDepartmentRepository:IGenericRepository<Department>
     {
-        IEnumerable<Department> GetAll(bool withTracking = true);
-        IQueryable<Department> GetAllAsQueryable();
+        IEnumerable<Department> GetSpecificDepartment();
 
-        Department GetById(int id);
-        int Add(Department entity);
-        int Update(Department entity);
-        int Delete(Department entity);
     }
 }

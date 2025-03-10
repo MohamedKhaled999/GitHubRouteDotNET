@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace IKEA.DAL.Persistence.Repositories.Departments
 {
-    public class EmployeeRepository : IDepartmentRepository
+    public class DepartmentRepository : IDepartmentRepository
     {
         private readonly ApplicationDbContext _dbContext;
-        public EmployeeRepository(ApplicationDbContext dbContext)
+        public DepartmentRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -44,6 +44,11 @@ namespace IKEA.DAL.Persistence.Repositories.Departments
         public Department GetById(int id)
         {
             return _dbContext.Departments.Find(id);
+        }
+
+        public IEnumerable<Department> GetSpecificDepartment()
+        {
+            throw new NotImplementedException();
         }
 
         public int Update(Department entity)
