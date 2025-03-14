@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IKEA.BLL.Models.Employees
 {
-    public class EmployeeToReturnDTO
+    public class EmployeeDetailsDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -16,7 +16,7 @@ namespace IKEA.BLL.Models.Employees
         public string? Address { get; set; }
         [DataType(DataType.Currency)]
         public decimal? Salary { get; set; }
-        [Display(Name="Is Active")]
+        [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
         [EmailAddress]
         public string? Email { get; set; }
@@ -26,6 +26,13 @@ namespace IKEA.BLL.Models.Employees
 
         public Gender Gender { get; set; }
         public EmployeeType EmployeeType { get; set; }
+
+        public int CreatedBy { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public int LastModificationBy { get; set; }
+        public DateTime LastModificationOn { get; set; }
+        public bool IsDeleted { get; set; }
+
 
 
     }

@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewData["Title"] = "Edit";
+    ViewBag.Action = "Edit";
 }
 
 @model DepartmentEditViewModel
@@ -8,44 +9,12 @@
 
 <h1>Edit  Department</h1>
 
+<partial name="Partial/CreateEditPartial"></partial>
 
 
-<form asp-action="Edit" method="post" asp-route-id="">
-    <div asp-validation-summary="ModelOnly" class=""></div>
-
-
-    <div class="form-floating mb-3">
-        <input class="form-control" asp-for="Code">
-        <label asp-for="Code"></label>
-        <span asp-validation-for="Code" class="text-danger alert-info"></span>
-
-    </div>
-
-
-    <div class="form-floating mb-3">
-        <input class="form-control" asp-for="Name">
-        <label asp-for="Name"></label>
-        <span asp-validation-for="Name" class="text-danger alert-info"></span>
-
-    </div>
-    <div class="form-floating mb-3">
-        <input class="form-control" asp-for="Description">
-        <label asp-for="Description"></label>
-        <span asp-validation-for="Description" class="text-danger alert-info"></span>
-
-    </div>
-
-
-    <div class="form-floating mb-3">
-        <input type="date" class="form-control" asp-for="CreationDate">
-        <label asp-for="CreationDate"></label>
-        <span asp-validation-for="CreationDate" class="text-danger alert-info"></span>
-
-    </div>
-    <input type="submit" value="Save" class="btn btn-outline-primary">
-    <a asp-controller="Department" asp-action="Create" class="btn btn-success">
-        Cancel
-    </a>
-</form>
-
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
 

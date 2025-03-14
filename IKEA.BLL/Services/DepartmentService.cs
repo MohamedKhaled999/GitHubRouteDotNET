@@ -98,8 +98,7 @@ namespace IKEA.BLL.Services
         
         public int UpdatedDepartment(UpdatedDepartmentDTO departmentDTO)
         {
-            
-
+           
             var departmentToUpdate = new Department
             {
                 Id= departmentDTO.Id,

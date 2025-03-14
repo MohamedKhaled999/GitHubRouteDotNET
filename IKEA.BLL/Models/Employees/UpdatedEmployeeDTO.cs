@@ -8,25 +8,29 @@ using System.Threading.Tasks;
 
 namespace IKEA.BLL.Models.Employees
 {
-    public class EmployeeToReturnDTO
+    public class UpdatedEmployeeDTO
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        [MaxLength(50, ErrorMessage = "Max Length of Name is 50 chars")]
+        [MinLength(5, ErrorMessage = "Min Length of Name is 50 chars")]
+        public string Name { get; set; } = null!;
+        [Range(22, 30)]
         public int? Age { get; set; }
+        [RegularExpression(@"^\d+-\w+-\w+-\w+$",
+            ErrorMessage = "123-street-city-country")]
         public string? Address { get; set; }
         [DataType(DataType.Currency)]
         public decimal? Salary { get; set; }
-        [Display(Name="Is Active")]
+        [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
         [EmailAddress]
         public string? Email { get; set; }
 
         public string? PhoneNumber { get; set; }
+        [Display(Name = "Hire Date")]
         public DateTime HiringDate { get; set; }
 
         public Gender Gender { get; set; }
         public EmployeeType EmployeeType { get; set; }
-
-
     }
 }

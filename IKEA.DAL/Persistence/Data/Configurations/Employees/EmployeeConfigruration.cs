@@ -25,7 +25,7 @@ namespace IKEA.DAL.Persistence.Data.Configurations.Employees
             builder.Property(E => E.EmployeeType)
                 .HasConversion(
                     (Type) => Type.ToString(),
-                    (Type) => (EmployeeType)Enum.Parse(typeof(Gender), Type)
+                    (Type) => (EmployeeType)Enum.Parse(typeof(EmployeeType), Type)
                 );
 
         }
