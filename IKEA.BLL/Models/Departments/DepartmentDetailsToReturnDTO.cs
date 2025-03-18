@@ -22,5 +22,6 @@ namespace IKEA.BLL.Models.Departments
         [Display(Name="Creational Date")]
         public DateOnly CreationDate { get; set; }
 
+
     }
 }

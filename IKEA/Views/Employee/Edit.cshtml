@@ -3,6 +3,8 @@
 
 @{
     ViewData["Title"] = "Edit";
+    SelectList DepartmentList = new(ViewBag.Deparments, "Id", "Name");
+
 }
 
 <h1>Edit</h1>

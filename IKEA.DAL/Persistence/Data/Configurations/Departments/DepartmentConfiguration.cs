@@ -14,12 +14,19 @@ namespace IKEA.DAL.Persistence.Data.Configurations.Departments
         public void Configure(EntityTypeBuilder<Department> builder)
         {
             builder.Property(D => D.Id).UseIdentityColumn(10, 10);
+
             builder.Property(D => D.Name).HasColumnType("varchar(50)")
                 .IsRequired();
+
             builder.Property(D => D.Code).HasColumnType("varchar(50)")
                 .IsRequired();
+
             builder.Property(D => D.CreatedOn).HasDefaultValueSql("GetUTCDate()");
+
             builder.Property(D => D.LastModificationOn).HasComputedColumnSql("GetUTCDate()");
+
+            builder.HasMany(D=>D.Employees).
+                WithOne(E=>E.Department).OnDelete(DeleteBehavior.SetNull);
 
         }
     }

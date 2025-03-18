@@ -1,4 +1,5 @@
 ﻿using IKEA.DAL.Common;
+using IKEA.DAL.Models.Departments;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -27,6 +28,7 @@ namespace IKEA.BLL.Models.Employees
         public Gender Gender { get; set; }
         public EmployeeType EmployeeType { get; set; }
 
+        public string? Department { get; set; } 
 
     }
 }

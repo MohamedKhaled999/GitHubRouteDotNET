@@ -2,6 +2,7 @@ using IKEA.BLL.Services;
 using IKEA.DAL.Persistence.Data;
 using IKEA.DAL.Persistence.Repositories.Departments;
 using IKEA.DAL.Persistence.Repositories.Employees;
+using IKEA.Mapping;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -22,7 +23,7 @@ namespace IKEA
 
             builder.Services.AddDbContext<ApplicationDbContext>(
                 OptionsBuilder =>
-                OptionsBuilder.
+                OptionsBuilder.UseLazyLoadingProxies().
                 UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 
                 );
@@ -30,6 +31,7 @@ namespace IKEA
             builder.Services.AddScoped<IDepartmentService, DepartmentService>();
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IEmployeeServices, EmployeeService>();
+            builder.Services.AddAutoMapper(M=>M.AddProfile<MappingProfile>());
             #endregion
 
             // Add services to the container.

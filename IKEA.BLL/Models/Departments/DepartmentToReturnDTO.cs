@@ -21,5 +21,6 @@ namespace IKEA.BLL.Models.Departments
         public string? Description { get; set; }
         public DateOnly CreationDate { get; set; }
 
+
     }
 }

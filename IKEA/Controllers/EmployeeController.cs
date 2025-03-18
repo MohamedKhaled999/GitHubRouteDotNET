@@ -9,20 +9,23 @@ namespace IKEA.Controllers
     {
         IWebHostEnvironment _environment;
         IEmployeeServices _employeeService;
+        IDepartmentService _departmentService;
         ILogger<EmployeeController> _logger;
 
         
-        public EmployeeController(IWebHostEnvironment environment, IEmployeeServices employeeService, ILogger<EmployeeController> logger)
+        public EmployeeController(IWebHostEnvironment environment, IDepartmentService departmentService,
+            IEmployeeServices employeeService, ILogger<EmployeeController> logger)
         {
             _environment = environment;
             _employeeService = employeeService;
+            _departmentService =departmentService ;
             _logger = logger;
         }
 
-        // GET: EmployeeController
-        public ActionResult Index()
+    
+        public ActionResult Index(string search)
         {
-            var employees = _employeeService.GetEmployees();
+            var employees = _employeeService.GetEmployees(search);
             return View(employees);
         }
 
@@ -42,6 +45,8 @@ namespace IKEA.Controllers
         // GET: EmployeeController/Create
         public ActionResult Create()
         {
+            var departments= _departmentService.GetAllDepartments();
+            ViewBag.Departments = departments;
             return View();
         }
 
@@ -93,6 +98,8 @@ namespace IKEA.Controllers
 
             if (employee is null)
                 return NotFound();
+
+            ViewBag.Departments = _departmentService.GetAllDepartments();
 
             return View(
 

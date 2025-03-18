@@ -28,6 +28,8 @@ namespace IKEA.DAL.Persistence.Data.Configurations.Employees
                     (Type) => (EmployeeType)Enum.Parse(typeof(EmployeeType), Type)
                 );
 
+
+
         }
     }
 }

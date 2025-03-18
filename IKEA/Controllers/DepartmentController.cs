@@ -1,4 +1,5 @@
-﻿using IKEA.BLL.Models.Departments;
+﻿using AutoMapper;
+using IKEA.BLL.Models.Departments;
 using IKEA.BLL.Services;
 using IKEA.DAL.Models.Departments;
 using IKEA.Models;
@@ -11,13 +12,16 @@ namespace IKEA.Controllers
         IDepartmentService _departmentService;
         ILogger<CreatedDepartmentDTO> _logger;
         IWebHostEnvironment _webHostEnvironment;
+        IMapper _mapper;
         public DepartmentController(IDepartmentService departmentService 
             ,ILogger<CreatedDepartmentDTO> logger
-            ,IWebHostEnvironment hostEnvironment) 
+            ,IWebHostEnvironment hostEnvironment
+            ,IMapper mapper) 
         {
             _departmentService = departmentService;
             _logger = logger;
             _webHostEnvironment = hostEnvironment;
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
@@ -92,13 +96,15 @@ namespace IKEA.Controllers
             if (department is null)
                 return NotFound();//404
 
-            var departmentEdit = new DepartmentEditViewModel
-            {
-                Code = department.Code,
-                CreationDate = department.CreationDate,
-                Description = department.Description,
-                Name = department.Name,
-            };
+            var departmentEdit = _mapper.Map<DepartmentEditViewModel>(department);   
+            // departmentEdit = 
+            //    new DepartmentEditViewModel
+            //{
+            //    Code = department.Code,
+            //    CreationDate = department.CreationDate,
+            //    Description = department.Description,
+            //    Name = department.Name,
+            //};
 
             return View(departmentEdit);
         }
@@ -114,14 +120,19 @@ namespace IKEA.Controllers
             var message = "Sorry An Error Occurred During Updating The Department :(";
             try
             {
-                var departmentToUpdate = new UpdatedDepartmentDTO()
-                {
-                    Id = id,
-                    Code = department.Code,
-                    CreationDate = department.CreationDate,
-                    Description = department.Description,
-                    Name = department.Name,
-                };
+                //var departmentToUpdate = new UpdatedDepartmentDTO()
+                //{
+                //    Id = id,
+                //    Code = department.Code,
+                //    CreationDate = department.CreationDate,
+                //    Description = department.Description,
+                //    Name = department.Name,
+                //};
+
+                var  departmentToUpdate = _mapper.Map<UpdatedDepartmentDTO>(department);
+
+                departmentToUpdate.Id = id;
+
 
                 int result = _departmentService.
                 UpdatedDepartment(departmentToUpdate);

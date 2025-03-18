@@ -31,15 +31,14 @@ namespace IKEA.BLL.Services
                 Address = createdEmployeeDTO.Address,
                 Age = createdEmployeeDTO.Age,
                 IsActive = createdEmployeeDTO.IsActive,
+                DepartmentId= createdEmployeeDTO.DepartmentId,
                 CreatedBy=1,
                 CreatedOn=DateTime.UtcNow,
-                LastModificationBy=1
-                ,
+                LastModificationBy=1,
                 LastModificationOn=DateTime.UtcNow,
             };
             return _repository.Add(employee);
         }
-
         public bool DeleteEmployee(int id)
         {
             Employee employee = _repository.GetById(id);
@@ -48,7 +47,6 @@ namespace IKEA.BLL.Services
 
                     return false;
         }
-
         public EmployeeDetailsDTO? GetEmployeeById(int id)
         {
             Employee employee = _repository.GetById(id);
@@ -71,16 +69,17 @@ namespace IKEA.BLL.Services
                 IsDeleted = employee.IsDeleted,
                 LastModificationBy = employee.LastModificationBy,
                 LastModificationOn = employee.LastModificationOn,
+                Department =employee.Department.Name
                 
                 
             };
 
         }
-
-        public IEnumerable<EmployeeToReturnDTO> GetEmployees()
+        public IEnumerable<EmployeeToReturnDTO> GetEmployees(string? search)
         {
-           var employees = _repository.GetAll().
+            var employees = _repository.GetAll().Where(x => x.Name.ToLower().Contains(search?.ToLower()??"")).
                 Select(
+                    
                     employee => new EmployeeToReturnDTO()
                         {
                             Address = employee.Address,
@@ -94,6 +93,8 @@ namespace IKEA.BLL.Services
                             PhoneNumber = employee.PhoneNumber,
                             Salary = employee.Salary,
                             HiringDate = employee.HiringDate,
+                            Department = employee.Department?.Name,
+                            
                         
                     }
                ).ToList();
@@ -102,7 +103,6 @@ namespace IKEA.BLL.Services
             return employees;
 
         }
-
         public int UpdateEmployee(UpdatedEmployeeDTO updatedEmployeeDTO)
         {
             
@@ -119,6 +119,7 @@ namespace IKEA.BLL.Services
                 Address = updatedEmployeeDTO.Address,
                 Age = updatedEmployeeDTO.Age,
                 IsActive = updatedEmployeeDTO.IsActive,
+                DepartmentId = updatedEmployeeDTO.DepartmentId,
                 LastModificationBy = 1,
                 LastModificationOn = DateTime.UtcNow,
             };

@@ -17,5 +17,7 @@ namespace IKEA.BLL.Models.Departments
         [Display(Name="Date Of Creation ")]
         public DateOnly CreationDate { get; set; }
 
+       
+
     }
 }

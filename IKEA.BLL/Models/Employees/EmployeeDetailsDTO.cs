@@ -33,6 +33,8 @@ namespace IKEA.BLL.Models.Employees
         public DateTime LastModificationOn { get; set; }
         public bool IsDeleted { get; set; }
 
+        public string? Department { get; set; }
+
 
 
     }

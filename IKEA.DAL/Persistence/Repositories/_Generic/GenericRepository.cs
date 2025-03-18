@@ -34,7 +34,9 @@ namespace IKEA.DAL.Persistence.Repositories._Generic
         public IEnumerable<T> GetAll(bool withNoTracking = true)
         {
             if (withNoTracking)
-                return _dbContext.Set<T>().Where(E =>E.IsDeleted == false).AsNoTracking<T>().ToList();
+                return _dbContext.Set<T>().Where(E =>E.IsDeleted == false)
+                    .AsNoTracking<T>().ToList();
+
 
             return _dbContext.Set<T>().Where(E => E.IsDeleted == false).ToList();
         }
