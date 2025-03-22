@@ -18,17 +18,15 @@ namespace IKEA.DAL.Persistence.Repositories._Generic
         {
             _dbContext = dbContext;
         }
-        public int Add(T entity)
+        public void Add(T entity)
         {
             _dbContext.Add(entity);
-            return _dbContext.SaveChanges();
         }
 
-        public int Delete(T entity)
+        public void Delete(T entity)
         {
             entity.IsDeleted = true;
             _dbContext.Update(entity);
-            return _dbContext.SaveChanges();
         }
 
         public IEnumerable<T> GetAll(bool withNoTracking = true)
@@ -51,10 +49,9 @@ namespace IKEA.DAL.Persistence.Repositories._Generic
             return _dbContext.Set<T>().Find(id);
         }
 
-        public int Update(T entity)
+        public void Update(T entity)
         {
             _dbContext.Update(entity);
-            return _dbContext.SaveChanges();
         }
     }
 }

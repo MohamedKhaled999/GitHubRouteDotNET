@@ -2,6 +2,7 @@
 using IKEA.DAL.Models.Employees;
 using IKEA.DAL.Persistence.Repositories.Departments;
 using IKEA.DAL.Persistence.Repositories.Employees;
+using IKEA.DAL.Persistence.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,11 @@ namespace IKEA.BLL.Services
 {
     public class EmployeeService : IEmployeeServices
     {
-        IEmployeeRepository _repository;
-        public EmployeeService(IEmployeeRepository repository)
+        private readonly IUnitOfWork _unitOfWork;
+
+        public EmployeeService(IUnitOfWork unitOfWork )
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
         public int CreateEmployee(CreatedEmployeeDTO createdEmployeeDTO)
         {
@@ -37,19 +39,25 @@ namespace IKEA.BLL.Services
                 LastModificationBy=1,
                 LastModificationOn=DateTime.UtcNow,
             };
-            return _repository.Add(employee);
+             _unitOfWork.EmployeeRepository.Add(employee);
+            return _unitOfWork.Complete();
         }
         public bool DeleteEmployee(int id)
         {
-            Employee employee = _repository.GetById(id);
+            Employee employee = _unitOfWork.EmployeeRepository.GetById(id);
             if (employee != null)
-                return _repository.Delete(employee)>0;
+            {
+              
+                 _unitOfWork.EmployeeRepository.Delete(employee);
+                return _unitOfWork.Complete()>0;
 
-                    return false;
+            }
+            return false;
         }
         public EmployeeDetailsDTO? GetEmployeeById(int id)
         {
-            Employee employee = _repository.GetById(id);
+            Employee employee = _unitOfWork.EmployeeRepository.GetById(id);
+
 
             return new()
             {
@@ -77,7 +85,7 @@ namespace IKEA.BLL.Services
         }
         public IEnumerable<EmployeeToReturnDTO> GetEmployees(string? search)
         {
-            var employees = _repository.GetAll().Where(x => x.Name.ToLower().Contains(search?.ToLower()??"")).
+            var employees = _unitOfWork.EmployeeRepository.GetAll().Where(x => x.Name.ToLower().Contains(search?.ToLower()??"")).
                 Select(
                     
                     employee => new EmployeeToReturnDTO()
@@ -124,7 +132,8 @@ namespace IKEA.BLL.Services
                 LastModificationOn = DateTime.UtcNow,
             };
 
-            return _repository.Update(employee);
+           _unitOfWork.EmployeeRepository.Update(employee);
+            return _unitOfWork.Complete();
         }
     }
 }

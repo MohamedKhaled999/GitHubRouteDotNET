@@ -1,5 +1,7 @@
 ﻿using IKEA.DAL.Models.Departments;
+using IKEA.DAL.Models.Employees;
 using IKEA.DAL.Persistence.Data;
+using IKEA.DAL.Persistence.Repositories._Generic;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,52 +11,17 @@ using System.Threading.Tasks;
 
 namespace IKEA.DAL.Persistence.Repositories.Departments
 {
-    public class DepartmentRepository : IDepartmentRepository
+    public class DepartmentRepository : GenericRepository<Department>, IDepartmentRepository
     {
         private readonly ApplicationDbContext _dbContext;
-        public DepartmentRepository(ApplicationDbContext dbContext)
+        public DepartmentRepository(ApplicationDbContext dbContext):base(dbContext) 
         {
             _dbContext = dbContext;
-        }
-        public int Add(Department entity)
-        {
-            _dbContext.Add(entity);
-            return _dbContext.SaveChanges();
-        }
-
-        public int Delete(Department entity)
-        {
-            _dbContext.Remove(entity);
-            return _dbContext.SaveChanges();
-        }
-
-        public IEnumerable<Department> GetAll(bool withNoTracking = true)
-        {
-            if (withNoTracking)
-                return _dbContext.Departments.AsNoTracking().ToList();
-
-                return _dbContext.Departments.ToList();
-        }
-
-        public IQueryable<Department> GetAllAsQueryable()
-        {
-           return _dbContext.Departments;
-        }
-
-        public Department GetById(int id)
-        {
-            return _dbContext.Departments.Find(id);
         }
 
         public IEnumerable<Department> GetSpecificDepartment()
         {
             throw new NotImplementedException();
-        }
-
-        public int Update(Department entity)
-        {
-            _dbContext.Update(entity);
-            return _dbContext.SaveChanges();
         }
     }
 }

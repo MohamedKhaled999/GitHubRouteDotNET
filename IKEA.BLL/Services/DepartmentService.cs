@@ -1,6 +1,7 @@
 ﻿using IKEA.BLL.Models.Departments;
 using IKEA.DAL.Models.Departments;
 using IKEA.DAL.Persistence.Repositories.Departments;
+using IKEA.DAL.Persistence.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,10 +13,12 @@ namespace IKEA.BLL.Services
 {
     public class DepartmentService : IDepartmentService
     {
+        private readonly IUnitOfWork _unitOfWork;
         IDepartmentRepository _repository;
-        public DepartmentService(IDepartmentRepository repository ) 
+        public DepartmentService(IUnitOfWork unitOfWork) 
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
+            _repository = unitOfWork.DepartmentRepository;
         }
         public IEnumerable<DepartmentToReturnDTO> GetAllDepartments()
         {
@@ -92,8 +95,10 @@ namespace IKEA.BLL.Services
 
             };
 
-            return _repository.Add(createdDepartmet);
-           
+            _repository.Add(createdDepartmet);
+            return _unitOfWork.Complete();
+
+
         }
         
         public int UpdatedDepartment(UpdatedDepartmentDTO departmentDTO)
@@ -112,7 +117,9 @@ namespace IKEA.BLL.Services
             };
 
 
-            return _repository.Update(departmentToUpdate);  
+             _repository.Update(departmentToUpdate); 
+            return _unitOfWork.Complete();
+
 
 
         }
@@ -120,9 +127,12 @@ namespace IKEA.BLL.Services
         public bool DeleteDepartment(int id)
         {
             var department = _repository.GetById(id);
-           if(department is not null)
-               return _repository.Delete(department)>0;
-           return false;
+            if (department is not null)
+            {
+                _repository.Delete(department);
+                return _unitOfWork.Complete() > 0;
+            }
+                return false;
         }
 
     }
