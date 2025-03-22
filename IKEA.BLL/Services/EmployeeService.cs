@@ -59,7 +59,8 @@ namespace IKEA.BLL.Services
             Employee employee = _unitOfWork.EmployeeRepository.GetById(id);
 
 
-            return new()
+            return
+             new EmployeeDetailsDTO()
             {
                 Id = employee.Id,
                 Address = employee.Address,
@@ -77,7 +78,7 @@ namespace IKEA.BLL.Services
                 IsDeleted = employee.IsDeleted,
                 LastModificationBy = employee.LastModificationBy,
                 LastModificationOn = employee.LastModificationOn,
-                Department =employee.Department.Name
+                Department =employee.Department?.Name
                 
                 
             };
