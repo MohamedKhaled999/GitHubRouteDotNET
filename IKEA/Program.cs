@@ -1,10 +1,14 @@
 using IKEA.BLL.Common.Services;
 using IKEA.BLL.Services;
+using IKEA.DAL.Models.Identity;
 using IKEA.DAL.Persistence.Data;
 using IKEA.DAL.Persistence.Repositories.Departments;
 using IKEA.DAL.Persistence.Repositories.Employees;
 using IKEA.DAL.Persistence.UnitOfWork;
 using IKEA.Mapping;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -36,6 +40,16 @@ namespace IKEA
             builder.Services.AddScoped<IEmployeeServices, EmployeeService>();
             builder.Services.AddAutoMapper(M=>M.AddProfile<MappingProfile>());
             builder.Services.AddTransient<IAttachService, AttachmentService>();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options=>
+                   {
+                     options.Password.RequiredLength = 5;
+                     options.Password.RequireNonAlphanumeric = true;// @#$
+                     options.Password.RequireUppercase = true;
+                     options.Password.RequireLowercase = true;
+                     options.Lockout.AllowedForNewUsers = true;
+                     options.Lockout.MaxFailedAccessAttempts = 5;
+                    }
+                ).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
             #endregion
 
             // Add services to the container.
