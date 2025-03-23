@@ -2,6 +2,7 @@
 using IKEA.DAL.Models.Departments;
 using IKEA.DAL.Persistence.Repositories.Departments;
 using IKEA.DAL.Persistence.UnitOfWork;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,7 +21,7 @@ namespace IKEA.BLL.Services
             _unitOfWork = unitOfWork;
             _repository = unitOfWork.DepartmentRepository;
         }
-        public IEnumerable<DepartmentToReturnDTO> GetAllDepartments()
+        public async Task<IEnumerable<DepartmentToReturnDTO>> GetAllDepartmentsAsync()
         {
             //var departments =_repository.GetAll();
             var departments = _repository.GetAllAsQueryable().Select(
@@ -37,7 +38,7 @@ namespace IKEA.BLL.Services
             }
 
 
-            ).ToList();
+            ).ToListAsync();
 
 
             Trace.WriteLine("moo");
@@ -45,7 +46,7 @@ namespace IKEA.BLL.Services
             
 
 
-            return departments; 
+            return await departments; 
 
 
 
@@ -53,9 +54,9 @@ namespace IKEA.BLL.Services
             
         }
 
-        public DepartmentDetailsToReturnDTO? GetDepartmentById(int id)
+        public async Task<DepartmentDetailsToReturnDTO?> GetDepartmentByIdAsync(int id)
         {
-            var department = _repository.GetById(id);
+            var department = await _repository.GetById(id);
 
             if (department is not null)
             {
@@ -77,7 +78,7 @@ namespace IKEA.BLL.Services
           return null  ;
         }
 
-        public int CreateDepartment(CreatedDepartmentDTO departmentDTO)
+        public async Task<int> CreateDepartmentAsync(CreatedDepartmentDTO departmentDTO)
         {
             var createdDepartmet = new Department
             {
@@ -96,12 +97,12 @@ namespace IKEA.BLL.Services
             };
 
             _repository.Add(createdDepartmet);
-            return _unitOfWork.Complete();
+            return await _unitOfWork.CompleteAsync();
 
 
         }
         
-        public int UpdatedDepartment(UpdatedDepartmentDTO departmentDTO)
+        public async Task<int> UpdatedDepartmentAsync(UpdatedDepartmentDTO departmentDTO)
         {
            
             var departmentToUpdate = new Department
@@ -118,19 +119,19 @@ namespace IKEA.BLL.Services
 
 
              _repository.Update(departmentToUpdate); 
-            return _unitOfWork.Complete();
+            return await _unitOfWork.CompleteAsync();
 
 
 
         }
 
-        public bool DeleteDepartment(int id)
+        public async Task<bool> DeleteDepartmentAsync(int id)
         {
-            var department = _repository.GetById(id);
+            var department = await _repository.GetById(id);
             if (department is not null)
             {
                 _repository.Delete(department);
-                return _unitOfWork.Complete() > 0;
+                return await _unitOfWork.CompleteAsync() > 0;
             }
                 return false;
         }

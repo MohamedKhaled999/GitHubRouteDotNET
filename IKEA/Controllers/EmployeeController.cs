@@ -23,16 +23,16 @@ namespace IKEA.Controllers
         }
 
     
-        public ActionResult Index(string search)
+        public async Task<ActionResult> Index(string search)
         {
-            var employees = _employeeService.GetEmployees(search);
+            var employees = await _employeeService.GetEmployeesAsync(search);
             return View(employees);
         }
 
         // GET: EmployeeController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            var employee = _employeeService.GetEmployeeById(id);
+            var employee = await _employeeService.GetEmployeeByIdAsync(id);
 
             if(employee != null)
              return View(employee);
@@ -43,9 +43,9 @@ namespace IKEA.Controllers
         }
 
         // GET: EmployeeController/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            var departments= _departmentService.GetAllDepartments();
+            var departments=await _departmentService.GetAllDepartmentsAsync();
             ViewBag.Departments = departments;
             return View();
         }
@@ -54,7 +54,7 @@ namespace IKEA.Controllers
         [HttpPost]
         [IgnoreAntiforgeryToken]
 
-        public ActionResult Create(CreatedEmployeeDTO createdEmployee)
+        public async Task<ActionResult> Create(CreatedEmployeeDTO createdEmployee)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace IKEA.Controllers
                     return View(createdEmployee);   
                 
                 
-                var result = _employeeService .CreateEmployee(createdEmployee);
+                var result = await _employeeService .CreateEmployeeAsync(createdEmployee);
 
                 if (result>0)
                     return RedirectToAction(nameof(Index));
@@ -82,24 +82,26 @@ namespace IKEA.Controllers
                     ModelState.AddModelError("", ex.Message);
                 else
                     ModelState.AddModelError("", "Error While Creating An Employee!!");
-
             }
+
+            var departments = await _departmentService.GetAllDepartmentsAsync();
+            ViewBag.Departments = departments;
             return View(createdEmployee);
 
         }
 
         // GET: EmployeeController/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if(id is null)
                return BadRequest();
 
-            var employee =_employeeService.GetEmployeeById(id.Value);
+            var employee =await _employeeService.GetEmployeeByIdAsync(id.Value);
 
             if (employee is null)
                 return NotFound();
 
-            ViewBag.Departments = _departmentService.GetAllDepartments();
+            ViewBag.Departments =await _departmentService.GetAllDepartmentsAsync();
 
             return View(
 
@@ -126,7 +128,7 @@ namespace IKEA.Controllers
         [HttpPost]
         [IgnoreAntiforgeryToken]
 
-        public ActionResult Edit(UpdatedEmployeeDTO employee)
+        public async Task<ActionResult> Edit(UpdatedEmployeeDTO employee)
         {
             try
             {
@@ -134,7 +136,7 @@ namespace IKEA.Controllers
                     return View(employee);
 
 
-                var result = _employeeService.UpdateEmployee(employee);
+                var result = await _employeeService.UpdateEmployeeAsync(employee);
 
                 if (result > 0)
                     return RedirectToAction(nameof(Index));
@@ -164,7 +166,7 @@ namespace IKEA.Controllers
         // GET: EmployeeController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id is null)
                 return BadRequest();
@@ -172,7 +174,7 @@ namespace IKEA.Controllers
             try
             {
 
-                var isDeleted = _employeeService.DeleteEmployee(id.Value);
+                var isDeleted =await _employeeService.DeleteEmployeeAsync(id.Value);
 
                 if (!isDeleted)
                     return BadRequest();

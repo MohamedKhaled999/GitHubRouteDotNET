@@ -1,8 +1,10 @@
-﻿using IKEA.BLL.Models.Employees;
+﻿using IKEA.BLL.Common.Services;
+using IKEA.BLL.Models.Employees;
 using IKEA.DAL.Models.Employees;
 using IKEA.DAL.Persistence.Repositories.Departments;
 using IKEA.DAL.Persistence.Repositories.Employees;
 using IKEA.DAL.Persistence.UnitOfWork;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +16,21 @@ namespace IKEA.BLL.Services
     public class EmployeeService : IEmployeeServices
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IAttachService _attachService;
 
-        public EmployeeService(IUnitOfWork unitOfWork )
+        public EmployeeService(IUnitOfWork unitOfWork ,
+            IAttachService attachService
+            )
         {
+            
             _unitOfWork = unitOfWork;
+            _attachService = attachService;
+
         }
-        public int CreateEmployee(CreatedEmployeeDTO createdEmployeeDTO)
+        public async Task<int> CreateEmployeeAsync(CreatedEmployeeDTO createdEmployeeDTO)
         {
+
+
             Employee employee = new Employee
             {
                 Name = createdEmployeeDTO.Name,
@@ -39,24 +49,32 @@ namespace IKEA.BLL.Services
                 LastModificationBy=1,
                 LastModificationOn=DateTime.UtcNow,
             };
-             _unitOfWork.EmployeeRepository.Add(employee);
-            return _unitOfWork.Complete();
+
+            if (createdEmployeeDTO.Image is not null)
+            {
+                employee.Image = _attachService.
+                        UploadFile(createdEmployeeDTO.Image, "images");
+            }
+
+
+            _unitOfWork.EmployeeRepository.Add(employee);
+            return await _unitOfWork.CompleteAsync();
         }
-        public bool DeleteEmployee(int id)
+        public async Task<bool> DeleteEmployeeAsync(int id)
         {
-            Employee employee = _unitOfWork.EmployeeRepository.GetById(id);
+            Employee employee =  await _unitOfWork.EmployeeRepository.GetById(id);
             if (employee != null)
             {
               
                  _unitOfWork.EmployeeRepository.Delete(employee);
-                return _unitOfWork.Complete()>0;
+                return await _unitOfWork.CompleteAsync()>0;
 
             }
             return false;
         }
-        public EmployeeDetailsDTO? GetEmployeeById(int id)
+        public async Task<EmployeeDetailsDTO?> GetEmployeeByIdAsync(int id)
         {
-            Employee employee = _unitOfWork.EmployeeRepository.GetById(id);
+            Employee employee = await _unitOfWork.EmployeeRepository.GetById(id);
 
 
             return
@@ -78,15 +96,17 @@ namespace IKEA.BLL.Services
                 IsDeleted = employee.IsDeleted,
                 LastModificationBy = employee.LastModificationBy,
                 LastModificationOn = employee.LastModificationOn,
-                Department =employee.Department?.Name
-                
+                Department =employee.Department?.Name,
+                Image = employee.Image
                 
             };
 
         }
-        public IEnumerable<EmployeeToReturnDTO> GetEmployees(string? search)
+        public async Task<IEnumerable<EmployeeToReturnDTO>> GetEmployeesAsync(string? search)
         {
-            var employees = _unitOfWork.EmployeeRepository.GetAll().Where(x => x.Name.ToLower().Contains(search?.ToLower()??"")).
+            if (search == null) search = string.Empty;
+            var employees =  _unitOfWork.EmployeeRepository.GetAllAsQueryable()
+                .Where(x => x.Name.ToLower().Contains(search.ToLower())).
                 Select(
                     
                     employee => new EmployeeToReturnDTO()
@@ -102,17 +122,16 @@ namespace IKEA.BLL.Services
                             PhoneNumber = employee.PhoneNumber,
                             Salary = employee.Salary,
                             HiringDate = employee.HiringDate,
-                            Department = employee.Department?.Name,
+                            Department = employee.Department==null ? null: employee.Department.Name,
                             
                         
                     }
-               ).ToList();
+               ).ToListAsync();
 
-
-            return employees;
+            return await employees;
 
         }
-        public int UpdateEmployee(UpdatedEmployeeDTO updatedEmployeeDTO)
+        public async Task<int> UpdateEmployeeAsync(UpdatedEmployeeDTO updatedEmployeeDTO)
         {
             
             Employee employee = new Employee 
@@ -134,7 +153,7 @@ namespace IKEA.BLL.Services
             };
 
            _unitOfWork.EmployeeRepository.Update(employee);
-            return _unitOfWork.Complete();
+            return await _unitOfWork.CompleteAsync();
         }
     }
 }

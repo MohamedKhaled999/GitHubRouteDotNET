@@ -22,6 +22,9 @@ namespace IKEA.DAL.Models.Employees
 
         public Gender Gender { get; set; }
         public EmployeeType EmployeeType { get; set; }
+        public string? Image { get; set; }
+
+
 
         //Navigational Property [One]
         public int? DepartmentId { get; set; }

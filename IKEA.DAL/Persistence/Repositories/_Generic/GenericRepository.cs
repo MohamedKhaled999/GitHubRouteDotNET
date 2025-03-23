@@ -29,24 +29,24 @@ namespace IKEA.DAL.Persistence.Repositories._Generic
             _dbContext.Update(entity);
         }
 
-        public IEnumerable<T> GetAll(bool withNoTracking = true)
+        public async Task <IEnumerable<T>> GetAll(bool withNoTracking = true)
         {
             if (withNoTracking)
-                return _dbContext.Set<T>().Where(E =>E.IsDeleted == false)
-                    .AsNoTracking<T>().ToList();
+                return await _dbContext.Set<T>().Where(E =>E.IsDeleted == false)
+                    .AsNoTracking<T>().ToListAsync();
 
 
-            return _dbContext.Set<T>().Where(E => E.IsDeleted == false).ToList();
+            return await _dbContext.Set<T>().Where(E => E.IsDeleted == false).ToListAsync();
         }
 
         public IQueryable<T> GetAllAsQueryable()
         {
-            return _dbContext.Set<T>().Where(E => E.IsDeleted == false);
+            return _dbContext.Set<T>().AsNoTracking().Where(E => E.IsDeleted == false);
         }
 
-        public T GetById(int id)
+        public async Task<T?> GetById(int id)
         {
-            return _dbContext.Set<T>().Find(id);
+            return await _dbContext.Set<T>().FindAsync(id);
         }
 
         public void Update(T entity)

@@ -23,29 +23,29 @@ namespace IKEA.Controllers
             _webHostEnvironment = hostEnvironment;
             _mapper = mapper;
         }
-        public IActionResult Index()
+        public async Task<ActionResult> Index()
         {
-           var departments = _departmentService.GetAllDepartments();
+           var departments = await _departmentService.GetAllDepartmentsAsync();
             return View(departments);
         }
 
         #region Create
         [HttpGet]
-        public IActionResult Create()
+        public async Task<ActionResult> Create()
         {
 
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(CreatedDepartmentDTO createdDepartment)
+        public async Task<ActionResult> Create(CreatedDepartmentDTO createdDepartment)
         {
             if (!ModelState.IsValid) // Sever Side Validation
                 return View(createdDepartment);
             string message = "Sorry An Error Occurred During Creating The Department :(";
             try
             {
-                var result = _departmentService.CreateDepartment(createdDepartment);
+                var result =await _departmentService.CreateDepartmentAsync(createdDepartment);
                 if (result > 0)
                 {
                   return  RedirectToAction(nameof(Index));
@@ -68,7 +68,7 @@ namespace IKEA.Controllers
 
         #region Details
         [HttpGet]
-        public IActionResult Details(int? id )
+        public async Task<ActionResult> Details(int? id )
         {
             if (id is null)
                 return BadRequest();
@@ -76,7 +76,7 @@ namespace IKEA.Controllers
             DepartmentDetailsToReturnDTO? department =null;
            
             if (id.HasValue)
-                department   = _departmentService.GetDepartmentById(id.Value);
+                department   = await _departmentService.GetDepartmentByIdAsync(id.Value);
                 
             if (department is null)
                 return NotFound();
@@ -87,11 +87,11 @@ namespace IKEA.Controllers
 
         #region Edit
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if (! id.HasValue)
                 return BadRequest();//400
-            var department=  _departmentService.GetDepartmentById(id.Value);
+            var department= await _departmentService.GetDepartmentByIdAsync(id.Value);
 
             if (department is null)
                 return NotFound();//404
@@ -112,7 +112,7 @@ namespace IKEA.Controllers
         [HttpPost]
         //[HttpPost("Department/Edit/{id?}")]
 
-        public IActionResult Edit([FromRoute]int id,
+        public async Task<ActionResult> Edit([FromRoute]int id,
             [FromForm] DepartmentEditViewModel department)
         {
             if (!ModelState.IsValid)
@@ -134,8 +134,8 @@ namespace IKEA.Controllers
                 departmentToUpdate.Id = id;
 
 
-                int result = _departmentService.
-                UpdatedDepartment(departmentToUpdate);
+                int result = await _departmentService.
+                UpdatedDepartmentAsync(departmentToUpdate);
                 
                 if (result > 0)
                  return   RedirectToAction(nameof(Index));
@@ -161,13 +161,13 @@ namespace IKEA.Controllers
         #region Delete
 
         [HttpGet]
-        public IActionResult Delete(int? id  ) 
+        public async Task<ActionResult> Delete(int? id  ) 
         {
             if (id is null)
             {
                 return BadRequest();
             }
-            var department = _departmentService.GetDepartmentById(id.Value);
+            var department =await _departmentService.GetDepartmentByIdAsync(id.Value);
             //var isDeleted = _departmentService.DeleteDepartment(id.Value);
 
             if (department is null)
@@ -180,12 +180,12 @@ namespace IKEA.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             var message = "Sorry , An Error Occurred During Deleting The Department";
             try
             {
-                var isDeleted = _departmentService.DeleteDepartment(id);
+                var isDeleted =await _departmentService.DeleteDepartmentAsync(id);
                 if (isDeleted)
                 {
                     return RedirectToAction(nameof(Index)); 

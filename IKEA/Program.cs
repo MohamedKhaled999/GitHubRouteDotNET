@@ -1,3 +1,4 @@
+using IKEA.BLL.Common.Services;
 using IKEA.BLL.Services;
 using IKEA.DAL.Persistence.Data;
 using IKEA.DAL.Persistence.Repositories.Departments;
@@ -34,6 +35,7 @@ namespace IKEA
             builder.Services.AddScoped<IDepartmentService, DepartmentService>();
             builder.Services.AddScoped<IEmployeeServices, EmployeeService>();
             builder.Services.AddAutoMapper(M=>M.AddProfile<MappingProfile>());
+            builder.Services.AddTransient<IAttachService, AttachmentService>();
             #endregion
 
             // Add services to the container.
