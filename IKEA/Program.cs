@@ -50,6 +50,9 @@ namespace IKEA
                      options.Lockout.MaxFailedAccessAttempts = 5;
                     }
                 ).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+            builder.Services.ConfigureApplicationCookie(op =>
+                    op.LoginPath = "/Account/SignIn"
+            );
             #endregion
 
             // Add services to the container.
@@ -67,6 +70,7 @@ namespace IKEA
 
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

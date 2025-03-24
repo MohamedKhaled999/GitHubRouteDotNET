@@ -1,10 +1,12 @@
 ﻿using IKEA.BLL.Models.Employees;
 using IKEA.BLL.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IKEA.Controllers
 {
+    [Authorize]
     public class EmployeeController : Controller
     {
         IWebHostEnvironment _environment;

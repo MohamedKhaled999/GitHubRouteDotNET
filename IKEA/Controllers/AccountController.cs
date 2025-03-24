@@ -68,6 +68,52 @@ namespace IKEA.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> SignIn(SignInViewModel signInViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var User = await _userManager.FindByEmailAsync(signInViewModel.Email);
+            if (User is { })
+            {
+                var flage = await _userManager.CheckPasswordAsync(User, signInViewModel.Password);
+
+                if (flage)
+                {
+                 var result = await  _signInManager.PasswordSignInAsync(User, signInViewModel.Password, signInViewModel.RememberMe, true);
+
+                    if (result.IsNotAllowed)
+                    {
+                        ModelState.AddModelError(string.Empty, "Your Account Is Not Comfirmed Yet !");
+                    }
+                    if (result.IsLockedOut)
+                    {
+                        ModelState.AddModelError(string.Empty, "Your Account Is Locked !");
+
+                    }
+
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction(nameof(HomeController.Index),"Home");
+                    }
+
+                }
+            }
+
+            ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+            return View(signInViewModel);
+        }
+
+        public async Task<IActionResult> SignOut()
+        {
+          await  _signInManager.SignOutAsync();
+            return View();
+        }
+
+
+
 
     }
 }
