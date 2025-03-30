@@ -11,6 +11,8 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using IKEA.BLL.Common.Services.EmailSettings;
+
 
 namespace IKEA
 {
@@ -40,6 +42,7 @@ namespace IKEA
             builder.Services.AddScoped<IEmployeeServices, EmployeeService>();
             builder.Services.AddAutoMapper(M=>M.AddProfile<MappingProfile>());
             builder.Services.AddTransient<IAttachService, AttachmentService>();
+            builder.Services.AddScoped<IEmailSettings, EmailSettings>();
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options=>
                    {
                      options.Password.RequiredLength = 5;
@@ -53,6 +56,9 @@ namespace IKEA
             builder.Services.ConfigureApplicationCookie(op =>
                     op.LoginPath = "/Account/SignIn"
             );
+
+
+
             #endregion
 
             // Add services to the container.
