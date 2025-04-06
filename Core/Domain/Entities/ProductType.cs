@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities
 {
-    public class ProductType:EntityBase<int>
+    public class ProductType:BaseEntity<int>
     {
         public string Name { get; set; }
     }
