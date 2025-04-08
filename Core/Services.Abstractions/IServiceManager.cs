@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities
+namespace Services.Abstractions
 {
-    public abstract class BaseEntity<T>
+    public interface IServiceManager
     {
-        public T Id {set; get; }
-  
+        public IProductService ProductService { get; }
     }
-
 }

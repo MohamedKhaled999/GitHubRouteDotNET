@@ -10,18 +10,20 @@ using System.Threading.Tasks;
 
 namespace Persistence.Repositories
 {
-    internal class UnitOfWork:IUnitOfWork
+    public class UnitOfWork:IUnitOfWork
     {
         private readonly StoreContext _storeContext;
 
         private readonly ConcurrentDictionary<string, object> _repositories;
+
         public UnitOfWork(StoreContext storeContext) 
         { 
             _storeContext = storeContext; 
             _repositories = new ConcurrentDictionary<string, object>();
+            
         }
 
-       
+        
         public Task<int> SaveChangesAsync()
                                             => _storeContext.SaveChangesAsync();
 
@@ -29,7 +31,7 @@ namespace Persistence.Repositories
         {
            string type = typeof(TEntity).Name;
 
-            return (IGenericRepository<TEntity, TKey>) _repositories.GetOrAdd(type,(_)=> new GenericRepository<TEntity, TKey>(_storeContext));
+           return (IGenericRepository<TEntity, TKey>) _repositories.GetOrAdd(type,(_)=> new GenericRepository<TEntity, TKey>(_storeContext));
 
         }
 

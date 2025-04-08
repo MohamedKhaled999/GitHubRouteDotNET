@@ -25,5 +25,6 @@ namespace Domain.Entities
         public int? TypeId { get; set; }
         public ProductType? ProductType { get; set; }
         #endregion
+
     }
 }
