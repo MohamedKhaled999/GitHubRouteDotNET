@@ -31,7 +31,7 @@ namespace Persistence
                 {
                     var typesData = await File.ReadAllTextAsync(@"..\Infrastructure\Persistence\Data\Seeding\types.json");
 
-                    var types = JsonSerializer.Deserialize<List<Type>>(typesData);
+                    var types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
 
                     if (types is not null && types.Any())
                     {
@@ -58,7 +58,7 @@ namespace Persistence
                 if (!_storeContext.Products.Any())
                 {
                     var ProductsData = await File.ReadAllTextAsync(@"..\Infrastructure\Persistence\Data\Seeding\products.json");
-                    var Products = JsonSerializer.Deserialize<List<ProductBrand>>(ProductsData);
+                    var Products = JsonSerializer.Deserialize<List<Product>>(ProductsData);
 
                     if (Products is not null && Products.Any())
                     {
