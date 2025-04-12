@@ -19,7 +19,13 @@ namespace Domain.Contracts
        void Delete(TEntity entity);
        void Update(TEntity entity);
 
+        #region Specifications
 
+        Task<IEnumerable<TEntity>> GetAllWithSpecificationAsync(Specifications<TEntity> specifications); 
+        Task<TEntity> GetByIdSpecificationAsync(Specifications<TEntity> specifications); 
+
+
+        #endregion
 
 
 

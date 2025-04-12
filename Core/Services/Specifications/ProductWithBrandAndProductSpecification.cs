@@ -22,10 +22,11 @@ namespace Services.Specifications
         }
 
         /// <summary>
-        /// GetAllProduct
+        /// Get All Products
         /// </summary>
        
-        public ProductWithBrandAndProductSpecification() : base(null)
+        public ProductWithBrandAndProductSpecification() 
+            : base(null)
         {
             AddInclude(P => P.ProductBrand);
             AddInclude(P => P.ProductType);

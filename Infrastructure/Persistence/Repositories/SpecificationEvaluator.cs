@@ -13,9 +13,10 @@ namespace Persistence.Repositories
         public static IQueryable<T> GetQuery<T>(IQueryable<T> inputQuery , Specifications<T> specifications ) where T : class
         {
             var query = inputQuery;
+            if(specifications.Critera is not null)
             query = query.Where(specifications.Critera);
 
-            specifications.IncludeExpressions.Aggregate(query, (currentQuery, nextQueryExpression) => query.Include(nextQueryExpression));
+            query = specifications.IncludeExpressions.Aggregate(query, (currentQuery, nextQueryExpression) => currentQuery.Include(nextQueryExpression));
 
             return query;
         }

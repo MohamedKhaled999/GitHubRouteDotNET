@@ -13,10 +13,10 @@ namespace Domain.Contracts
        public Specifications(Expression<Func<T, bool>> critera)
                           => Critera = critera;
 
-        public Expression<Func<T,bool>> Critera { get; }
-        public List<Expression<Func<T, object>>> IncludeExpressions { get;  }
+        public Expression<Func<T,bool>>? Critera { get; }
+        public List<Expression<Func<T, object>>> IncludeExpressions { get; } = new();
 
-        public void AddInclude(Expression<Func<T, object>> expression) 
+        protected void AddInclude(Expression<Func<T, object>> expression) 
                           => IncludeExpressions.Add(expression);
         
     }

@@ -2,8 +2,18 @@
 
 GET {{E_Commerce_HostAddress}}/WeatherForecast/
 Accept: application/json
+### Brands
+GET {{E_Commerce_HostAddress}}/Product/Brands
+
+### Types
+GET {{E_Commerce_HostAddress}}/Product/Types
+
 ### Products
 GET {{E_Commerce_HostAddress}}/Product/Products
+
+###
+GET {{E_Commerce_HostAddress}}/Product/3
 Accept: application/json
+
 
 
