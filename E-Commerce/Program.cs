@@ -40,10 +40,11 @@ namespace E_Commerce
                 app.UseSwaggerUI();
             }
 
+            app.UseStaticFiles();
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
@@ -56,6 +57,7 @@ namespace E_Commerce
                 await dbInitializer.Initialize();
 
             }
+        
         }
 
        
