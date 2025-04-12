@@ -18,6 +18,15 @@ namespace Persistence.Repositories
 
             query = specifications.IncludeExpressions.Aggregate(query, (currentQuery, nextQueryExpression) => currentQuery.Include(nextQueryExpression));
 
+            if (specifications.OrderBy is not null)
+            {
+                 query=query.OrderBy(specifications.OrderBy);
+            }
+            else if (specifications.OrderByDescending is not null)
+            {
+                query = query.OrderByDescending(specifications.OrderByDescending);
+            }
+
             return query;
         }
     }

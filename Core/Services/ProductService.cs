@@ -20,11 +20,11 @@ namespace Services
             return mapper.Map<IEnumerable<BrandResultDTO>>(brands);
         }
 
-        public async Task<IEnumerable<ProductResultDTO>> GetAllProductsAsync()
+        public async Task<IEnumerable<ProductResultDTO>> GetAllProductsAsync(ProductSpecificationParameters parameters)
         {
             //var products = await unitOfWork.GetRepository<Product, int>().GetAllAsync();
             var products = await unitOfWork.GetRepository<Product, int>()
-                                .GetAllWithSpecificationAsync(new ProductWithBrandAndProductSpecification());
+                                .GetAllWithSpecificationAsync(new ProductWithBrandAndProductSpecification(parameters));
             return mapper.Map<IEnumerable<ProductResultDTO>>(products);
         }
 

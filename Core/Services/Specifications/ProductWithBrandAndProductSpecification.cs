@@ -1,5 +1,6 @@
 ﻿using Domain.Contracts;
 using Domain.Entities;
+using Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +26,12 @@ namespace Services.Specifications
         /// Get All Products
         /// </summary>
        
-        public ProductWithBrandAndProductSpecification() 
-            : base(null)
+        public ProductWithBrandAndProductSpecification( ProductSpecificationParameters parameters) 
+            : base(P=>
+                      (!parameters.BrandId.HasValue ||  P.BrandId == parameters.BrandId) &&
+                      (!parameters.BrandId.HasValue ||  P.TypeId == parameters.TypeId  )
+                   
+                  )
         {
             AddInclude(P => P.ProductBrand);
             AddInclude(P => P.ProductType);

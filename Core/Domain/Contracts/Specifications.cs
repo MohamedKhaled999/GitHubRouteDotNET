@@ -16,8 +16,23 @@ namespace Domain.Contracts
         public Expression<Func<T,bool>>? Critera { get; }
         public List<Expression<Func<T, object>>> IncludeExpressions { get; } = new();
 
+        #region Filteration && Sorting
+        public Expression<Func<T, object>>? OrderBy { get; private set; }
+        public Expression<Func<T, object>>? OrderByDescending { get; private set; }
+
+
+        #endregion
+
+
         protected void AddInclude(Expression<Func<T, object>> expression) 
                           => IncludeExpressions.Add(expression);
-        
+
+        protected void SetOrderBy(Expression<Func<T, object>> expression) 
+            => OrderBy = expression;
+
+        protected void SetOrderByDescending(Expression<Func<T, object>> expression)
+           => OrderBy = expression;
+
+
     }
 }
