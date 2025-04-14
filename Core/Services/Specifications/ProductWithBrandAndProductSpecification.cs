@@ -30,11 +30,18 @@ namespace Services.Specifications
             : base(P=>
                       (!parameters.BrandId.HasValue ||  P.BrandId == parameters.BrandId) &&
                       (!parameters.BrandId.HasValue ||  P.TypeId == parameters.TypeId  )
-                   
-                  )
+            &&
+                      (
+                        string.IsNullOrEmpty(parameters.Search)
+                        ||
+                        P.Name.ToLower().Contains(parameters.Search.ToLower().Trim())
+                      )
+            )
         {
+            
             AddInclude(P => P.ProductBrand);
             AddInclude(P => P.ProductType);
+            ApplyPagination(parameters.PageIndex,parameters.PageSize);
         }
 
 

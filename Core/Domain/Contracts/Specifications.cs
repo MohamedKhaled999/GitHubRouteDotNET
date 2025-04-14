@@ -19,8 +19,12 @@ namespace Domain.Contracts
         #region Filteration && Sorting
         public Expression<Func<T, object>>? OrderBy { get; private set; }
         public Expression<Func<T, object>>? OrderByDescending { get; private set; }
+        #endregion
 
-
+        #region Pagination
+        public int Take {  get; private set; }
+        public int Skip { get; private set; }
+        public bool IsPaginated { get; private set; }
         #endregion
 
 
@@ -33,6 +37,14 @@ namespace Domain.Contracts
         protected void SetOrderByDescending(Expression<Func<T, object>> expression)
            => OrderBy = expression;
 
+        protected void ApplyPagination(int pageIndex,int pageSize )
+        {
+            IsPaginated = true;
+            Take = pageSize;
+            Skip = (pageIndex-1) * pageSize;
+
+
+        }
 
     }
 }

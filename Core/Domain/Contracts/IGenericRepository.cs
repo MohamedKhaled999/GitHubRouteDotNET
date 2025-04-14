@@ -22,8 +22,8 @@ namespace Domain.Contracts
         #region Specifications
 
         Task<IEnumerable<TEntity>> GetAllWithSpecificationAsync(Specifications<TEntity> specifications); 
-        Task<TEntity> GetByIdSpecificationAsync(Specifications<TEntity> specifications); 
-
+        Task<TEntity> GetByIdSpecificationAsync(Specifications<TEntity> specifications);
+        Task<int> GetCountAsync(Specifications<TEntity> specifications);
 
         #endregion
 

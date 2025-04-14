@@ -20,6 +20,7 @@ namespace Presentation
             return Ok(products);
         }
 
+
         [HttpGet("Brands")]
         public async Task<ActionResult<IEnumerable<BrandResultDTO>>> GetAllBrands()
         {
