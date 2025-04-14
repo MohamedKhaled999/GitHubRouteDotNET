@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Abstractions;
 using Shared;
+using Shared.ErrorModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,7 +37,13 @@ namespace Presentation
             return Ok(types);
         }
 
-        [HttpGet("Product/{id:int:min(1)}")]
+        //for Swagger 
+        [ProducesResponseType(typeof (ErrorDetails),(int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof (ErrorDetails),(int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof (ValidationErrorsResponse),(int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof (ProductResultDTO),(int)HttpStatusCode.OK)]
+        //------------
+        [HttpGet("Product/{id}")]
         public async Task<ActionResult<ProductResultDTO>> GetProduct(int id)
         {
             var product = await serviceManager.ProductService.GetProductByIdAsync(id);

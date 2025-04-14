@@ -12,7 +12,7 @@ GET {{E_Commerce_HostAddress}}/Product/Types
 GET {{E_Commerce_HostAddress}}/Product/Products
 
 ###
-GET {{E_Commerce_HostAddress}}/Product/3
+GET {{E_Commerce_HostAddress}}/Product/Product/999
 Accept: application/json
 
 

@@ -1,5 +1,8 @@
 
 using Domain.Contracts;
+using E_Commerce.Factories;
+using E_Commerce.Middlewares;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Persistence.Data;
@@ -24,11 +27,17 @@ namespace E_Commerce
             builder.Services.AddControllers().AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+            builder.Services.AddEndpointsApiExplorer();
+
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<StoreContext>
             (
                  op => op.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
             );
+            builder.Services.Configure<ApiBehaviorOptions>(op =>
+            {
+                op.InvalidModelStateResponseFactory = ApiResponseFactory.CustomValidationErrors;
+            });
 
             var app = builder.Build();
             await InitializeDb(app);
@@ -39,6 +48,8 @@ namespace E_Commerce
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.UseStaticFiles();
 
