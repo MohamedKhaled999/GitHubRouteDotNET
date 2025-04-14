@@ -9,6 +9,7 @@ using Persistence.Data;
 using Persistence.Repositories;
 using Services;
 using Services.Abstractions;
+using StackExchange.Redis;
 
 namespace E_Commerce
 {
@@ -34,6 +35,9 @@ namespace E_Commerce
             (
                  op => op.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
             );
+
+            builder.Services.AddSingleton<IConnectionMultiplexer>( op =>
+                                        ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("Redis")) );
             builder.Services.Configure<ApiBehaviorOptions>(op =>
             {
                 op.InvalidModelStateResponseFactory = ApiResponseFactory.CustomValidationErrors;
