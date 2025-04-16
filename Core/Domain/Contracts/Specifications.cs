@@ -6,7 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain.Contracts
-{
+{   
+    // base        critera     include
+    //context.product.where().include()....
     public abstract class Specifications<T> 
         where T : class
     {

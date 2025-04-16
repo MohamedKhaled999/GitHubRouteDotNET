@@ -47,6 +47,8 @@ namespace Persistence.Repositories
             return await ApplySpecifications(specifications).FirstOrDefaultAsync();
 
         }
+
+
         private IQueryable<TEntity> ApplySpecifications(Specifications<TEntity> specifications)
             => SpecificationEvaluator.GetQuery(_storeContext.Set<TEntity>(), specifications);
 

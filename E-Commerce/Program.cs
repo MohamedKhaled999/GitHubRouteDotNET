@@ -24,8 +24,11 @@ namespace E_Commerce
             builder.Services.AddScoped<IDbInitializer, DbInitializer>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IServiceManager, ServiceManager>();
+            builder.Services.AddScoped<IBasketRepository, BasketRepository>();
             builder.Services.AddAutoMapper(typeof(Services.AssemblyReference).Assembly);
             builder.Services.AddControllers().AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
+            
+            
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
             builder.Services.AddEndpointsApiExplorer();
@@ -38,10 +41,13 @@ namespace E_Commerce
 
             builder.Services.AddSingleton<IConnectionMultiplexer>( op =>
                                         ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("Redis")) );
+            //For Validation
             builder.Services.Configure<ApiBehaviorOptions>(op =>
             {
                 op.InvalidModelStateResponseFactory = ApiResponseFactory.CustomValidationErrors;
             });
+
+
 
             var app = builder.Build();
             await InitializeDb(app);

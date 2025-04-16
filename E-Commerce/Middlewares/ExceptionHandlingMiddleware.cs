@@ -38,13 +38,10 @@ namespace E_Commerce.Middlewares
             httpContext.Response.StatusCode=(int) HttpStatusCode.InternalServerError;//500
             httpContext.Response.ContentType = "application/json";
 
-
-            
-
             httpContext.Response.StatusCode = exception switch
             {
-               ProductNotFoundException => (int)HttpStatusCode.NotFound,
-               //NotFoundException=>(int)HttpStatusCode.InternalServerError,
+            ProductNotFoundException => (int)HttpStatusCode.NotFound,
+            BasketNotFoundException => (int)HttpStatusCode.InternalServerError,
                _=> (int)HttpStatusCode.InternalServerError
             };
             var response = new ErrorDetails

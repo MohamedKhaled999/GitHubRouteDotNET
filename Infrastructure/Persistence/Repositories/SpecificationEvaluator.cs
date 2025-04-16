@@ -14,6 +14,7 @@ namespace Persistence.Repositories
         {
             var query = inputQuery;
             if(specifications.Critera is not null)
+                
             query = query.Where(specifications.Critera);
 
             query = specifications.IncludeExpressions.Aggregate(query, (currentQuery, nextQueryExpression) => currentQuery.Include(nextQueryExpression));
@@ -30,7 +31,6 @@ namespace Persistence.Repositories
             if (specifications.IsPaginated)
             {
                query =  query.Skip(specifications.Skip).Take(specifications.Take);
-                
             }
 
             return query;
