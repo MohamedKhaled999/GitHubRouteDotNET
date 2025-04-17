@@ -1,7 +1,9 @@
 
 using Domain.Contracts;
+using Domain.Entities.Identity;
 using E_Commerce.Factories;
 using E_Commerce.Middlewares;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -27,8 +29,15 @@ namespace E_Commerce
             builder.Services.AddScoped<IBasketRepository, BasketRepository>();
             builder.Services.AddAutoMapper(typeof(Services.AssemblyReference).Assembly);
             builder.Services.AddControllers().AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
-            
-            
+            builder.Services.AddIdentity<User, IdentityRole>(op =>
+            {
+                op.Password.RequireLowercase = false;
+                op.Password.RequireNonAlphanumeric = false;
+                op.Password.RequireLowercase = false;
+                op.Password.RequireDigit = false;
+                op.Password.RequiredLength = 8;
+            }).AddEntityFrameworkStores<StoreIdentityContext>(); 
+             
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
             builder.Services.AddEndpointsApiExplorer();
@@ -38,6 +47,10 @@ namespace E_Commerce
             (
                  op => op.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
             );
+            builder.Services.AddDbContext<StoreIdentityContext>
+           (
+                op => op.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection"))
+           );
 
             builder.Services.AddSingleton<IConnectionMultiplexer>( op =>
                                         ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("Redis")) );
@@ -75,7 +88,8 @@ namespace E_Commerce
             {
                 var scope = app.Services.CreateScope();
                 var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-                await dbInitializer.Initialize();
+                await dbInitializer.InitializeAsync();
+                await dbInitializer.InitializeIdentityAsync();
 
             }
         

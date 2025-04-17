@@ -8,6 +8,7 @@ namespace Domain.Contracts
 {
     public interface IDbInitializer
     {
-        public Task Initialize();
+        public Task InitializeAsync();
+        public Task InitializeIdentityAsync();
     }
 }
