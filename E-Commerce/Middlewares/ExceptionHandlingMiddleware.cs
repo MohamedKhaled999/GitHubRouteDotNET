@@ -1,4 +1,5 @@
 ﻿using Domain.Exceptions;
+using Microsoft.AspNetCore.Http;
 using Shared.ErrorModels;
 using System.Net;
 
@@ -38,21 +39,30 @@ namespace E_Commerce.Middlewares
             httpContext.Response.StatusCode=(int) HttpStatusCode.InternalServerError;//500
             httpContext.Response.ContentType = "application/json";
 
-            httpContext.Response.StatusCode = exception switch
-            {
-            ProductNotFoundException => (int)HttpStatusCode.NotFound,
-            BasketNotFoundException => (int)HttpStatusCode.InternalServerError,
-               _=> (int)HttpStatusCode.InternalServerError
-            };
             var response = new ErrorDetails
             {
                 ErrorMessage = exception.Message,
-                StatusCode = httpContext.Response.StatusCode,
+              
+            };
+            httpContext.Response.StatusCode = exception switch
+            {
+           NotFoundException => (int)HttpStatusCode.NotFound,
+           UnAuthorizedException => (int)HttpStatusCode.Unauthorized,
+           RegisterValidationException registerValidationException => HandleValidationException(response, registerValidationException),
+           
+               _=> (int)HttpStatusCode.InternalServerError
             };
 
+           response. StatusCode = httpContext.Response.StatusCode;
             await httpContext.Response.WriteAsync(response.ToString());
         }
-    
+
+        private int HandleValidationException(ErrorDetails response, RegisterValidationException registerValidationException)
+        {
+            response.Errors =registerValidationException.Errors;
+            return (int)HttpStatusCode.BadRequest;
+        }
+
         public async Task HandleNotFoundEndPointException(HttpContext httpContext)
         {
             httpContext.Response.ContentType = "application/json";
