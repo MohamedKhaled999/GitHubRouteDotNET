@@ -10,9 +10,8 @@ using System.Threading.Tasks;
 
 namespace Presentation
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class BasketController : ControllerBase
+   
+    public class BasketController : ApiController
     {
         private readonly IServiceManager _serviceManager;
 

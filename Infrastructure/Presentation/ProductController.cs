@@ -11,9 +11,8 @@ using System.Threading.Tasks;
 
 namespace Presentation
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductController(IServiceManager serviceManager): ControllerBase
+   
+    public class ProductController(IServiceManager serviceManager): ApiController
     {
         [HttpGet("Products")]
         public async Task<ActionResult<IEnumerable<ProductResultDTO>>> GetAllProduct([FromQuery]ProductSpecificationParameters parameters)
@@ -37,12 +36,12 @@ namespace Presentation
             return Ok(types);
         }
 
-        //for Swagger 
-        [ProducesResponseType(typeof (ErrorDetails),(int)HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof (ErrorDetails),(int)HttpStatusCode.InternalServerError)]
-        [ProducesResponseType(typeof (ValidationErrorsResponse),(int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType(typeof (ProductResultDTO),(int)HttpStatusCode.OK)]
-        //------------
+        ////for Swagger 
+        //[ProducesResponseType(typeof (ErrorDetails),(int)HttpStatusCode.NotFound)]
+        //[ProducesResponseType(typeof (ErrorDetails),(int)HttpStatusCode.InternalServerError)]
+        //[ProducesResponseType(typeof (ValidationErrorsResponse),(int)HttpStatusCode.BadRequest)]
+        //[ProducesResponseType(typeof (ProductResultDTO),(int)HttpStatusCode.OK)]
+        ////------------
         [HttpGet("Product/{id}")]
         public async Task<ActionResult<ProductResultDTO>> GetProduct(int id)
         {

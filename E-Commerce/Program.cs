@@ -3,15 +3,19 @@ using Domain.Contracts;
 using Domain.Entities.Identity;
 using E_Commerce.Factories;
 using E_Commerce.Middlewares;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Persistence;
 using Persistence.Data;
 using Persistence.Repositories;
 using Services;
 using Services.Abstractions;
+using Shared.Security;
 using StackExchange.Redis;
+using System.Text;
 
 namespace E_Commerce
 {
@@ -36,8 +40,9 @@ namespace E_Commerce
                 op.Password.RequireLowercase = false;
                 op.Password.RequireDigit = false;
                 op.Password.RequiredLength = 8;
-            }).AddEntityFrameworkStores<StoreIdentityContext>(); 
-             
+            }).AddEntityFrameworkStores<StoreIdentityContext>();
+
+
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
             builder.Services.AddEndpointsApiExplorer();
@@ -47,6 +52,7 @@ namespace E_Commerce
             (
                  op => op.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
             );
+
             builder.Services.AddDbContext<StoreIdentityContext>
            (
                 op => op.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection"))
@@ -61,6 +67,31 @@ namespace E_Commerce
             });
 
 
+            //For Authentication
+
+            builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
+            builder.Services.AddAuthentication(
+                op =>
+                {
+                    op.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    op.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                }
+                ).AddJwtBearer( op =>
+                {
+                    var jwtOptions = builder.Configuration.GetSection("JwtOptions").Get<JwtOptions>();
+                    op.TokenValidationParameters = new()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = jwtOptions.Issure,
+                        ValidAudience = jwtOptions.Audience,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.SecertKey)),
+
+                    };
+                })
+                ;
 
             var app = builder.Build();
             await InitializeDb(app);
@@ -78,6 +109,7 @@ namespace E_Commerce
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
