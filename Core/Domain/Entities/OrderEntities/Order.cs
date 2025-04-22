@@ -6,8 +6,22 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities.OrderEntities
 {
-    public class Order
+    public class Order:BaseEntity<Guid>
     {
+        public Order()
+        {
+            
+        }
+        public Order(string userEmail, ShippingAddress shippingAddress, ICollection<OrderItem> orderItems,  DeliveryMethod deliveryMethod, decimal subTotal)
+        {
+            Id = Guid.NewGuid();
+            UserEmail = userEmail;
+            ShippingAddress = shippingAddress;
+            OrderItems = orderItems;
+            DeliveryMethod = deliveryMethod;
+            SubTotal = subTotal;
+        }
+
         public string UserEmail { get; set; }
 
         public ShippingAddress ShippingAddress { get; set; }
