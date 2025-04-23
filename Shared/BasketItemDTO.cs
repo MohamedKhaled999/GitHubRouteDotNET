@@ -17,7 +17,7 @@ namespace Shared
         
         [Range(1,100)]
         public int Quantity { get; init; }
-        public string Category { get; init; }
+        public string Type { get; init; }
         public string Brand { get; init; }
 
     }

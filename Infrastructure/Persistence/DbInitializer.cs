@@ -1,6 +1,7 @@
 ﻿using Domain.Contracts;
 using Domain.Entities;
 using Domain.Entities.Identity;
+using Domain.Entities.OrderEntities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
@@ -19,7 +20,8 @@ namespace Persistence
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public DbInitializer(StoreContext storeContext ,UserManager<User> userManager ,RoleManager<IdentityRole> roleManager) 
+        public DbInitializer(StoreContext storeContext ,UserManager<User> userManager
+            ,RoleManager<IdentityRole> roleManager) 
         {
             _storeContext = storeContext;
             _userManager = userManager;
@@ -73,6 +75,20 @@ namespace Persistence
                     }
 
                 }
+
+                if (!_storeContext.DeliveryMethods.Any())
+                {
+                    var DeliveryData = await File.ReadAllTextAsync(@"..\Infrastructure\Persistence\Data\Seeding\delivery.json");
+                    var deliveryMethods = JsonSerializer.Deserialize<List<DeliveryMethod>>(DeliveryData);
+
+                    if (deliveryMethods is not null && deliveryMethods.Any())
+                    {
+                        await _storeContext.AddRangeAsync(deliveryMethods);
+                        await _storeContext.SaveChangesAsync();
+                    }
+
+                }
+
 
 
             }
