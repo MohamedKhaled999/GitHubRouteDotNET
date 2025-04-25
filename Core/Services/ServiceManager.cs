@@ -2,6 +2,7 @@
 using Domain.Contracts;
 using Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Services.Abstractions;
 using Shared.Security;
@@ -19,14 +20,16 @@ namespace Services
         private readonly Lazy<IBasketService> _basketService;
         private readonly Lazy<IAuthenticationService> _authenticationService;
         private readonly Lazy<IOrderService> _orderService;
-        public ServiceManager(IUnitOfWork unitOfWork, IBasketRepository _basketRepository, IMapper mapper ,UserManager<User> userManager,IOptions<JwtOptions> options)
+        private readonly Lazy<IPaymentService> _paymentService;
+        public ServiceManager(IUnitOfWork unitOfWork, IBasketRepository _basketRepository, IMapper mapper ,UserManager<User> userManager,IOptions<JwtOptions> options,IConfiguration configuration)
         {
            
             _productService = new Lazy<IProductService>(() => new ProductService(unitOfWork,mapper));
             _basketService = new Lazy<IBasketService>(() => new BasketService(_basketRepository,mapper));
-            _authenticationService = new Lazy<IAuthenticationService>(() => new AuthenticationService(userManager,options));
+            _authenticationService = new Lazy<IAuthenticationService>(() => new AuthenticationService(userManager,options,mapper));
         
         _orderService = new Lazy<IOrderService>(() => new OrderService(_basketRepository,unitOfWork,mapper));
+        _paymentService = new Lazy<IPaymentService>(() => new PaymentService(_basketRepository,unitOfWork,mapper,configuration));
 
         }
         public IProductService ProductService => _productService.Value;
@@ -36,5 +39,7 @@ namespace Services
         public IAuthenticationService AuthenticationService => _authenticationService.Value;
 
         public IOrderService OrderService => _orderService.Value;
+
+        public IPaymentService PaymentService => _paymentService.Value;
     }
 }

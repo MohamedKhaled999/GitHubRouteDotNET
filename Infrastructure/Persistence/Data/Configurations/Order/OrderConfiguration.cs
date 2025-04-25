@@ -1,10 +1,5 @@
 ﻿using Domain.Entities.OrderEntities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MyOrder = Domain.Entities.OrderEntities ;
 
 namespace Persistence.Data.Configurations.Order;
@@ -24,5 +19,9 @@ internal class OrderConfiguration : IEntityTypeConfiguration<MyOrder.Order>
         builder.Property(O => O.SubTotal)
             .HasColumnType("decimal(18,3)");
 
+        builder
+            .HasMany(o => o.OrderItems)
+            .WithOne()
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

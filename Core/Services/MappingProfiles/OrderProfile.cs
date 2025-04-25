@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Domain.Entities.Identity;
 using Domain.Entities.OrderEntities;
 using Shared.Order;
+using Shared.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +32,8 @@ namespace Services.MappingProfiles
 
 
             CreateMap<DeliveryMethod, DeliveryMethodDto>().ReverseMap();
+
+            CreateMap<Address, AddressDto>().ReverseMap();
 
 
         }

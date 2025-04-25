@@ -9,7 +9,7 @@ namespace Shared.Order
     public record OrderRequest
     {
         public string BasketId { get; init; }
-        public ShippingAddressDto ShippingAddressDto { get; init; }
+        public ShippingAddressDto ShipToAddress { get; init; }
         public int DeliveryMethodId { get; init; }
     }
 }

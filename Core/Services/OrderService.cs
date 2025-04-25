@@ -35,8 +35,8 @@ namespace Services
                 .GetAsync(request.DeliveryMethodId)?? throw new DeliveryMethodNotFoundException(request.DeliveryMethodId) ;
 
             var subTotal = orderItems.Sum(i => i.Price * i.Quantity);
-            var shipping = mapper.Map<ShippingAddress>(request.ShippingAddressDto);
-            var order = new Order(email,shipping, orderItems, deliveryMethod, subTotal);
+            var shipping = mapper.Map<ShippingAddress>(request.ShipToAddress);
+            var order = new Order(email,shipping, orderItems, deliveryMethod, subTotal,basket.PaymentIntentId);
 
             await unitOfWork.GetRepository<Order,Guid>().AddAsync(order);
             await unitOfWork.SaveChangesAsync();
