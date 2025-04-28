@@ -31,6 +31,7 @@ namespace E_Commerce
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IServiceManager, ServiceManager>();
             builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+            builder.Services.AddScoped<ICacheRepository, CacheRepository>();
             builder.Services.AddAutoMapper(typeof(Services.AssemblyReference).Assembly);
             builder.Services.AddControllers().AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
             builder.Services.AddIdentity<User, IdentityRole>(op =>
