@@ -1,0 +1,19 @@
+@E_Commerce_HostAddress = http://localhost:5072/api
+
+GET {{E_Commerce_HostAddress}}/WeatherForecast/
+Accept: application/json
+### Brands
+GET {{E_Commerce_HostAddress}}/Product/Brands
+
+### Types
+GET {{E_Commerce_HostAddress}}/Product/Types
+
+### Products
+GET {{E_Commerce_HostAddress}}/Product/Products
+
+###
+GET {{E_Commerce_HostAddress}}/Product/Product/999
+Accept: application/json
+
+
+
